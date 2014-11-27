@@ -1,8 +1,10 @@
 #!/usr/bin/perl
 
 $file = "letter_x.tex";
+$output = "x_uni.html";
 
 open(IN, "$file") or die "Can't open $file";
+open(OUT, ">$output") or die "Can't open $output";
 
 $line = <IN>;
 
@@ -17,35 +19,45 @@ while($line)
 	$line =~ s/[\s]+/ /g;
 	$line =~ s/\\hyperlink\{(.*)\}\{\\raisebox\{(.*)\}\[(.*)\]\[(.*)\]\{\\pdfimage(.*)\{([A-Z]_Pictures)\/(.*).jpg}}}/\6\/\7.jpg/g;
 	
-	if($line =~ /\\word\{(.*)\}/)
+	if($line =~ /\\bentry/)
 	{
-		print $line . "\n";
+		print OUT "<div class=\"word\">\n";
+	}
+	elsif($line =~ /\\eentry/)
+	{
+		print OUT "</div>\n";
+	}
+	elsif($line =~ /\\word\{(.*)\}/)
+	{
+		print OUT "<span class=\"engWord clr1\">".  $1 ."</span>\n";
 	}
 	elsif($line =~ /\\word\[(.*)\]\{(.*)\}/)
 	{
-		print $line . "\n";
+		print OUT "<span class=\"engWord clr1\">".  $2 ."</span>\n";
 	}
 	elsif($line =~ /\\wordwithhyphen\{(.*)\}\{(.*)\}/)
 	{
-		print $line . "\n";		
+		print OUT "<span class=\"engWord clr1\">".  $2 ."</span>\n";
 	}	
 	elsif($line =~ /\\wordnospeech\{(.*)\}\{(.*)\}/)
 	{
-		print $line . "\n";		
+		print OUT "<span class=\"engWord clr1\">".  $2 ."</span>\n";
 	}	
 	elsif($line =~ /\\pron\{(.*)\}/)
 	{
-		print $line . "\n";		
+		print OUT "<span class=\"kanWord\">". gen_unicode($1) ."</span>\n";
 	}
 	elsif($line =~ /\\gl\{(.*)\}/)
 	{
-		print $line . "\n";		
+		$gl = preprocess($1);
+		$gl = gen_unicode($gl);
+		print OUT "<span class=\"grammarLabel\">". $gl ."</span>\n";
 	}
 	else
 	{
 		$line = preprocess($line);
 		$line = gen_unicode($line);
-		print $line . "\n";		
+		print OUT $line . "\n";		
 	}
 	
 	$line = <IN>;	
@@ -775,11 +787,11 @@ sub gen_unicode()
 		{
 			$kan_str =~ s/\\eng\{(.*?)\}/!E!\1!K!/;
 		}
-		elsif($kan_str =~ /\$(.*?)\$/)
-		{
-			$kan_str =~ s/\$(.*?)\$/!E! \1 !K!/;
-			$kan_str =~ s/\^\\circ/&#xB0;/g;
-		}
+		#~ elsif($kan_str =~ /\$(.*?)\$/)
+		#~ {
+			#~ $kan_str =~ s/\$(.*?)\$/!E! \1 !K!/;
+			#~ $kan_str =~ s/\^\\circ/&#xB0;/g;
+		#~ }
 		else
 		{
 			$flag = 0;
@@ -798,7 +810,7 @@ sub gen_unicode()
 	print TMP $kan_str;
 	close(TMP);
 	
-	system("to_unicode4 tmp.txt > tmp1.txt");
+	system("./tmp.o tmp.txt > tmp1.txt");
 	open(UN, "tmp1.txt") or die "Can't open tmp1.txt\n";	
 	my $uni_str = <UN>;
 	close(UN);
