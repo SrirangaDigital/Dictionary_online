@@ -7,6 +7,8 @@ open(IN, "$file") or die "Can't open $file";
 open(OUT, ">$output") or die "Can't open $output";
 
 $line = <IN>;
+$xid = 0;
+
 
 while($line)
 {
@@ -21,6 +23,7 @@ while($line)
 	
 	if($line =~ /\\bentry/)
 	{
+		$xid++;
 		print OUT "<div class=\"word\">\n";
 	}
 	elsif($line =~ /\\eentry/)
@@ -45,7 +48,12 @@ while($line)
 	}	
 	elsif($line =~ /\\pron\{(.*)\}/)
 	{
-		print OUT "<span class=\"kanWord\">". gen_unicode($1) ."</span>\n";
+		$pron = $1;
+		if($pron ne "?")
+		{
+			print OUT "<span class=\"kanWord\">". gen_png($pron) ."</span>\n";
+		}
+		#print OUT "<span class=\"kanWord\">". gen_unicode($1) ."</span>\n";
 	}
 	elsif($line =~ /\\gl\{(.*)\}/)
 	{
@@ -850,4 +858,26 @@ sub gen_unicode()
 
 	#$uni_str =~ s/\bಸರ್‍\b/ಸರ್/g;
 	return $uni_str;
+}
+
+sub gen_png()
+{
+	my($pron) = @_;
+	
+	open(FOUT,">tmp1.tex") or die "Can' open tmp1.tex";
+	
+	print FOUT '\documentclass{article}';
+	print FOUT '\usepackage{kanlel}';
+	print FOUT '\usepackage[active]{preview}';
+	print FOUT '\begin{document}';
+	print FOUT '\begin{preview}';
+	print FOUT '{\bf ' . $pron . '}';
+	print FOUT '\end{preview}';
+	print FOUT '\end{document}';
+	
+	close(FOUT);
+	
+	system("latex tmp1.tex ;  dvipng -T tight -D 144.54 -o tmp1.png tmp1.dvi ; mv tmp1.png X/pronunciation/xid$xid.png");
+	
+	
 }

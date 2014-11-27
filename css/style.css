@@ -690,3 +690,6 @@ p.bracket_grp{
 .crossref{
 	color: #3372df;
 }
+.kanWord img{
+	vertical-align: bottom;
+}
