@@ -244,6 +244,7 @@ sub gen_unicode()
 	$flg = 1;
 
 	$kan_str =~ s/\\bf//g;
+	$kan_str =~ s/\{\\yoghsymb\\char178\}/!E!&#x021D;!K!/g;
 	$kan_str =~ s/\\num\{(.*?)\}//g;
 	$kan_str =~ s/\\ralign\{(.*?)\}/!E! $ralign_btag !K! $1 !E! $ralign_etag !K! /g;
 	$kan_str =~ s/\\char'263/!E!&#x0CBD;!K!/g;
