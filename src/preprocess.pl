@@ -1,9 +1,10 @@
 #!/usr/bin/perl
 
-$file = "letter_x.tex";
-$output = "x_uni.html";
-$pictfile = "x_figs_list.tex";
-$indexfile = "indexofletterx.tex";
+$file = "X/texfiles/letter_x.tex";
+$output = "X/html/x_uni.html";
+$pictfile = "X/texfiles/x_figs_list.tex";
+$indexfile = "X/texfiles/indexofletterx.tex";
+$label = "xid";
 
 open(IN, "$file") or die "Can't open $file";
 open(OUT, ">$output") or die "Can't open $output";
@@ -15,7 +16,7 @@ close(IDX);
 
 
 $line = <IN>;
-$xid = 0;
+$wordid = 0;
 
 
 $preamble = "<!doctype html>
@@ -23,21 +24,21 @@ $preamble = "<!doctype html>
 <head>
 	<meta charset=\"UTF-8\">
 	<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-	<link rel=\"stylesheet\" href=\"../css/reset.css\"> <!-- CSS reset -->
-	<link rel=\"stylesheet\" href=\"../css/style.css\"> <!-- Resource style -->
+	<link rel=\"stylesheet\" href=\"../../../css/reset.css\"> <!-- CSS reset -->
+	<link rel=\"stylesheet\" href=\"../../../css/style.css\"> <!-- Resource style -->
 	<script type=\"text/x-mathjax-config\">
 	  MathJax.Hub.Config({
 		tex2jax: {inlineMath: [[\"\$\",\"\$\"],[\"\\\\(\",\"\\\\)\"]]}
 	  });
 	</script>
-	<script type=\"text/javascript\" src=\"../MathJax/MathJax.js?config=TeX-AMS_HTML-full\"></script>
+	<script type=\"text/javascript\" src=\"../../../MathJax/MathJax.js?config=TeX-AMS_HTML-full\"></script>
 	<title>Univerity of Mysore - English Kannada Dictionary</title>
 </head>
 <body>
 	<header class=\"cd-header\">
 		<div id=\"cd-logo\">
 			<a href=\"#0\">
-				<img src=\"img/logo.png\" alt=\"Logo\">
+				<img src=\"../../../img/logo.png\" alt=\"Logo\">
 				<span>UNIVERSITY OF MYSORE</span>
 			</a>
 		</div>
@@ -78,7 +79,7 @@ while($line)
 	
 	if($line =~ /\\bentry/)
 	{
-		$xid++;
+		$wordid++;
 		print OUT "<div class=\"word\">\n";
 	}
 	elsif($line =~ /\\eentry/)
@@ -87,22 +88,22 @@ while($line)
 	}
 	elsif($line =~ /\\word\{(.*)\}/)
 	{
-		print OUT "<div class=\"whead\" id=\"xid$xid\">\n";
+		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">".  $1 ."</span>\n";
 	}
 	elsif($line =~ /\\word\[(.*)\]\{(.*)\}/)
 	{
-		print OUT "<div class=\"whead\" id=\"xid$xid\">\n";
+		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">".  $2 ."</span>\n";
 	}
 	elsif($line =~ /\\wordwithhyphen\{(.*)\}\{(.*)\}/)
 	{
-		print OUT "<div class=\"whead\" id=\"xid$xid\">\n";	
+		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";	
 			print OUT "\t<span class=\"engWord clr1\">".  $2 ."</span>\n";
 	}	
 	elsif($line =~ /\\wordnospeech\{(.*)\}\{(.*)\}/)
 	{
-		print OUT "<div class=\"whead\" id=\"xid$xid\">\n";			
+		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";			
 			print OUT "\t<span class=\"engWord clr1\">".  $2 ."</span>\n";
 	}
 	elsif($line =~ /\\pron\{(.*)\}/)
@@ -112,7 +113,7 @@ while($line)
 		{			
 			if($pron =~ /Z|Yx/)
 			{
-				if(!(-e "X/pronunciation/xid$xid.png"))
+				if(!(-e "X/pronunciation/". $label . $wordid . ".png"))
 				{
 					gen_png($pron);
 				}
@@ -120,7 +121,7 @@ while($line)
 				$pron =~ s/Yx/yx/g;
 				$pront =~ s/\\kern1pt//g;
 				
-				print OUT "\t<span class=\"kanWord\"><img src=\"X/pronunciation/xid". $xid . ".png\" alt=\"". gen_unicode($pron) ."\" /></span><br />\n";
+				print OUT "\t<span class=\"kanWord\"><img src=\"../pronunciation/" . $label . $wordid . ".png\" alt=\"". gen_unicode($pron) ."\" /></span><br />\n";
 			}
 			else
 			{
@@ -182,9 +183,12 @@ while($line)
 	}
 	else
 	{
-		$line = preprocess($line);
-		$line = gen_unicode($line);
-		print OUT "<p>" . $line . "</p>\n";		
+		if(!($line =~ /^[\s]+$|^$/))
+		{
+			$line = preprocess($line);
+			$line = gen_unicode($line);
+			print OUT "<p>" . $line . "</p>\n";		
+		}
 	}
 	
 	$line = <IN>;	
@@ -220,7 +224,7 @@ sub output_pictures()
 		{
 			$pictalpha = $1;
 			$pictname = $2;
-			print OUT "\t\t<div><img src=\"$pictalpha/Pictures/$pictname.jpg\" alt=\"$pictname\"/></div>\n";
+			print OUT "\t\t<div><img src=\"../Pictures/$pictname.jpg\" alt=\"$pictname\"/></div>\n";
 		}
 		elsif($pictline =~ /\\caption\{\\eng\{(.*)\}\}/)
 		{
@@ -359,7 +363,7 @@ sub get_index()
 	{
 		if($indexlist[$i] =~ /\{$word\}/)
 		{
-			return "xid" . ($i+1);
+			return "$label" . ($i+1);
 		}
 	}
 	
@@ -383,7 +387,8 @@ sub gen_png()
 	
 	close(FOUT);
 	
-	system("latex tmp1.tex ;  dvipng -T tight -D 144.54 -o tmp1.png tmp1.dvi ; mv tmp1.png X/pronunciation/xid$xid.png");
+	$pngname = $label . $wordid . ".png";
+	system("latex tmp1.tex ;  dvipng -T tight -D 144.54 -o tmp1.png tmp1.dvi ; mv tmp1.png X/pronunciation/$pngname");
 	
 	
 }
