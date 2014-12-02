@@ -5,6 +5,8 @@ $output = "X/html/x_uni.html";
 $pictfile = "X/texfiles/x_figs_list.tex";
 $indexfile = "X/texfiles/indexofletterx.tex";
 $label = "xid";
+$letter = "X";
+$glcount = 0;
 
 open(IN, "$file") or die "Can't open $file";
 open(OUT, ">$output") or die "Can't open $output";
@@ -85,35 +87,64 @@ while($line)
 	elsif($line =~ /\\eentry/)
 	{
 		print OUT "</div>\n";
+		$glcount = 0;
 	}
 	elsif($line =~ /\\word\{(.*)\}/)
 	{
+		$wordform1 = $1;
+		
+		insert_target();
 		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";
-			print OUT "\t<span class=\"engWord clr1\">".  $1 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1\">".  $wordform1 ."</span>\n";
 	}
 	elsif($line =~ /\\word\[(.*)\]\{(.*)\}/)
 	{
+		$wordform2 = $2;
+		
+		insert_target();		
 		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";
-			print OUT "\t<span class=\"engWord clr1\">".  $2 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1\">".  $wordform2 ."</span>\n";
 	}
 	elsif($line =~ /\\wordwithhyphen\{(.*)\}\{(.*)\}/)
 	{
+		$wordform3 = $2;
+				
+		insert_target();		
 		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";	
-			print OUT "\t<span class=\"engWord clr1\">".  $2 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1\">".  $wordform3 ."</span>\n";
 	}	
 	elsif($line =~ /\\wordnospeech\{(.*)\}\{(.*)\}/)
 	{
+		$wordform4 = $2;
+		
+		insert_target();		
 		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";			
-			print OUT "\t<span class=\"engWord clr1\">".  $2 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1\">".  $wordform4 ."</span>\n";
+	}
+	elsif($line =~ /\\wordRemoveSpace\{(.*)\}\{(.*)\}/)
+	{
+		$wordform5 = $2;
+				
+		insert_target();		
+		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";			
+			print OUT "\t<span class=\"engWord clr1\">".  $wordform5 ."</span>\n";		
+	}
+	elsif($line =~ /\\wordspecial\{(.*)\}\{[0-9]\}\{[0-9]\}\{(.*)\}/)
+	{
+		$wordform6 = $1;		
+		
+		insert_target();
+		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";			
+			print OUT "\t<span class=\"engWord clr1\">".  $wordform6 ."</span>\n";		
 	}
 	elsif($line =~ /\\pron\{(.*)\}/)
 	{
 		$pron = $1;
 		if($pron ne "?")
-		{			
+		{
 			if($pron =~ /Z|Yx/)
 			{
-				if(!(-e "X/pronunciation/". $label . $wordid . ".png"))
+				if(!(-e "$letter/pronunciation/". $label . $wordid . ".png"))
 				{
 					gen_png($pron);
 				}
@@ -132,14 +163,18 @@ while($line)
 		{
 			print OUT "\t<span class=\"kanWord\"></span><br />\n";
 		}
+		print OUT "</div>\n";
 		#print OUT "<span class=\"kanWord\">". gen_unicode($1) ."</span>\n";
 	}
 	elsif($line =~ /\\gl\{(.*)\}/)
 	{
+		$glcount++;
 		$gl = preprocess($1);
 		$gl = gen_unicode($gl);
-		print OUT "\t<span class=\"grammarLabel\">". $gl ."</span>\n";
-		print OUT "</div>\n";
+
+		print OUT "<div class=\"grammarLabel\">\n";
+		print OUT "\t<span>". $gl ."</span>\n";
+		print OUT "</div>\n";		
 	}
 	elsif($line =~ /\\bmng/)
 	{
@@ -169,7 +204,43 @@ while($line)
 	{
 		$numline = preprocess($1);
 		$numline = gen_unicode($numline);
-		print OUT "<li>". $numline  ."</li>\n";
+		if($hypertarget ne "")
+		{
+			print OUT "<li id=\"" . $hypertarget . "\">" . $numline  ."</li>\n";
+			$hypertarget = "";
+		}
+		elsif($hyperdef ne "")
+		{
+			print OUT "<li id=\"" . $hyperdef. "\">" . $numline  . "</li>\n";
+			$hyperdef = "";
+		}
+		else
+		{
+			print OUT "<li>". $numline  ."</li>\n";
+		}
+	}
+	elsif($line =~ /\\numi\{[0-9]+\}(.*)/)
+	{
+		$numline = preprocess($1);
+		$numline = gen_unicode($numline);
+		if($hypertarget ne "")
+		{
+			print OUT "<li id=\"" . $hypertarget . "\">" . $numline  . "\n";
+			$hypertarget = "";
+		}
+		elsif($hyperdef ne "")
+		{
+			print OUT "<li id=\"" . $hyperdef. "\">" . $numline  . "\n";
+			$hyperdef = "";
+		}
+		else
+		{
+			print OUT "<li>". $numline  ."\n";
+		}
+	}
+	elsif($line =~ /\\numie/)
+	{
+		print OUT "</li>\n";		
 	}
 	elsif($line =~ /\\alnum\{[a-z]\}(.*)/)
 	{
@@ -177,7 +248,21 @@ while($line)
 		$numline = gen_unicode($numline);
 		print OUT "<li>". $numline  ."</li>\n";
 	}
-	elsif($line =~ /^%/)
+	elsif($line =~ /\\hypertarget\{(.*)\}\{\}/)
+	{
+		$hypertarget = $1;
+		$hypertarget =~ s/ /_/g;
+	}
+	elsif($line =~ /\\hyperdef\{[A-Z]\}\{(.*)\}\{\}/)
+	{
+		$hyperdef = $1;
+		$hyperdef =~ s/ /_/g;
+	}
+	elsif($line =~ /^%END/)
+	{
+		exit(1);
+	}
+	elsif($line =~ /^%|\\noindent/)
 	{
 		
 	}
@@ -247,6 +332,8 @@ sub gen_unicode()
 	my ($tmp,$flg,$i,$endash_uni,$endash,$flag);
 	$flg = 1;
 
+	$kan_str =~ s/\\char144/sx/g;
+	$kan_str =~ s/\\&/!E!&amp;!K!/g;
 	$kan_str =~ s/\\bf//g;
 	$kan_str =~ s/\{\\yoghsymb\\char178\}/!E!&#x021D;!K!/g;
 	$kan_str =~ s/\\num\{(.*?)\}//g;
@@ -275,6 +362,10 @@ sub gen_unicode()
 		{
 			$kan_str =~ s/\\eng\{(.*?)\}/!E!\1!K!/;
 		}
+		elsif($kan_str =~ /\\engit\{(.*?)\}/)
+		{
+			$kan_str =~ s/\\engit\{(.*?)\}/!E!<span class="engit">\1<\/span>!K!/;
+		}
 		elsif($kan_str =~ /\\imglink\{(.*)\}\{\\raisebox(.*)\{([A-Z])_Pictures\/(.*)\.jpg\}\}\}/)
 		{
 			$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig">Figure<\/a><\/span>!K!/;
@@ -282,9 +373,11 @@ sub gen_unicode()
 		elsif($kan_str =~ /\\ecrlink\{(.*?)\}\{(.*?)\}/)
 		{
 			$word = $1;
+			#~ print "$2";
 			$id = get_index($word);
-			
+			#~ print "\n\n" . $word . "($id)\n\n";
 			$kan_str =~ s/\\ecrlink\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$id">\2<\/a><\/span>!K!/;
+			#~ print $kan_str . "\n";
 		}
 		elsif($kan_str =~ /\\ecrref\{kandict_[a-z]\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/)
 		{
@@ -359,6 +452,8 @@ sub get_index()
 	my($word) = @_;
 	my($i);
 	
+	$word =~ s/([\(\)])/\\$1/g;	
+	
 	for($i=0;$i<@indexlist;$i++)
 	{
 		if($indexlist[$i] =~ /\{$word\}/)
@@ -388,7 +483,7 @@ sub gen_png()
 	close(FOUT);
 	
 	$pngname = $label . $wordid . ".png";
-	system("latex tmp1.tex ;  dvipng -T tight -D 144.54 -o tmp1.png tmp1.dvi ; mv tmp1.png X/pronunciation/$pngname");
+	system("latex tmp1.tex ;  dvipng -T tight -D 144.54 -o tmp1.png tmp1.dvi ; mv tmp1.png $letter/pronunciation/$pngname");
 	
 	
 }
@@ -1078,4 +1173,18 @@ $line =~ s/\\Latin\\ /\\eng\{Latin\} /g;
 $line =~ s/\\Latin/\\eng\{Latin\}/g;
 
 return $line;
+}
+
+sub insert_target()
+{
+	if($hypertarget ne "")
+	{
+		print OUT "<div id=\"". $hypertarget ."\"></div>\n";
+		$hypertarget = "";
+	}
+	if($hyperdef ne "")
+	{
+		print OUT "<div id=\"". $hyperdef ."\"></div>\n";
+		$hyperdef = "";
+	}
 }

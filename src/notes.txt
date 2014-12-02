@@ -1,1 +1,6 @@
 [NKjTl][kKgGcCjJTDNtdnpPbBmyrlvsShL][h]?
+\word
+\wordRemoveSpace
+\wordnospeech
+\wordspecial
+\wordwithhyphen
