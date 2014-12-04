@@ -650,7 +650,7 @@ Main components
     min-height: 200px;
 }
 .word .wBody{
-    margin: 5px 0 0 20px;
+    margin: 5px 0 0 50px;
     font-size: 0.8em;
 }
 .word .wBody ol{
@@ -675,7 +675,7 @@ Main components
 .grammarLabel{
     font-style: italic;
     font-size: 0.8em;
-    margin: 10px 0px 5px 20px;
+    margin: 10px 0px 5px 15px;
     color: #950C0C;
     padding-bottom: 5px;
     border-bottom: 1px solid #DEDEDE;        
@@ -707,3 +707,18 @@ p.bracket_grp{
 	padding:1px;
 	border:1px solid #021a40;
 }
+div.seealso{
+	padding: 0.2em 0em 0.2em 1.5em;
+	background-color: #F9C26F;
+	margin-bottom: 1em;
+}
+.seealsoword{
+	font-style: italic;
+	font-size: 0.7em;
+	color: #3372df;
+}
+.crossref a img{
+	float: right;
+	vertical-align: middle;
+}
+
