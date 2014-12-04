@@ -1,21 +1,27 @@
 #!/usr/bin/perl
 
-$file = "X/texfiles/letter_x.tex";
-$output = "X/html/x_uni.html";
-$pictfile = "X/texfiles/x_figs_list.tex";
-$indexfile = "X/texfiles/indexofletterx.tex";
-$label = "xid";
-$letter = "X";
+$file = "Y/texfiles/letter_y.tex";
+$output = "Y/html/y_uni.html";
+$pictfile = "Y/texfiles/y_figs_list.tex";
+$indexfile = "Y/texfiles/indexoflettery.tex";
+$hashfile = "Y/texfiles/dictionarywords.tex";
+
+$label = "yid";
+$letter = "Y";
 $glcount = 0;
+
+@list = ();
+%mainhash = ();
 
 open(IN, "$file") or die "Can't open $file";
 open(OUT, ">$output") or die "Can't open $output";
 open(IDX, "$indexfile") or die "Can't open $indexfile";
 
-@indexlist = <IDX>;
 
+@indexlist = <IDX>;
 close(IDX);
 
+manage_duplicates();
 
 $line = <IN>;
 $wordid = 0;
@@ -82,7 +88,13 @@ while($line)
 	if($line =~ /\\bentry/)
 	{
 		$wordid++;
+		$seealso_id = $label . $wordid;
 		print OUT "<div class=\"word\">\n";
+		if($mainhash{$seealso_id} ne "")
+		{
+			print OUT "\t<div class=\"seealso\"><span style=\"font-style: italic;font-size:0.7em;\">See also</span> ". $mainhash{$seealso_id} . "</div>";
+		}
+		
 	}
 	elsif($line =~ /\\eentry/)
 	{
@@ -97,13 +109,14 @@ while($line)
 		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform1 ."</span>\n";
 	}
-	elsif($line =~ /\\word\[(.*)\]\{(.*)\}/)
+	elsif($line =~ /\\word\[(.*)\(([0-9]+)\)\]\{(.*)\}/)
 	{
-		$wordform2 = $2;
+		$word_occ = $2;
+		$wordform2 = $3;
 		
 		insert_target();		
 		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";
-			print OUT "\t<span class=\"engWord clr1\">".  $wordform2 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform2 ."</span>\n";
 	}
 	elsif($line =~ /\\wordwithhyphen\{(.*)\}\{(.*)\}/)
 	{
@@ -309,7 +322,7 @@ sub output_pictures()
 		{
 			$pictalpha = $1;
 			$pictname = $2;
-			print OUT "\t\t<div><img src=\"../Pictures/$pictname.jpg\" alt=\"$pictname\"/></div>\n";
+			print OUT "\t\t<div><img src=\"../Pictures/main/$pictname.jpg\" alt=\"$pictname\"/></div>\n";
 		}
 		elsif($pictline =~ /\\caption\{\\eng\{(.*)\}\}/)
 		{
@@ -368,7 +381,7 @@ sub gen_unicode()
 		}
 		elsif($kan_str =~ /\\imglink\{(.*)\}\{\\raisebox(.*)\{([A-Z])_Pictures\/(.*)\.jpg\}\}\}/)
 		{
-			$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig">Figure<\/a><\/span>!K!/;
+			$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
 		}
 		elsif($kan_str =~ /\\ecrlink\{(.*?)\}\{(.*?)\}/)
 		{
@@ -377,6 +390,12 @@ sub gen_unicode()
 			$id = get_index($word);
 			#~ print "\n\n" . $word . "($id)\n\n";
 			$kan_str =~ s/\\ecrlink\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$id">\2<\/a><\/span>!K!/;
+			#~ print $kan_str . "\n";
+		}
+		elsif($kan_str =~ /\\ecrlinktarget\{(.*?)\}\{(.*?)\}/)
+		{
+			$target = $1;
+			$kan_str =~ s/\\ecrlinktarget\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#\1">\2<\/a><\/span>!K!/;
 			#~ print $kan_str . "\n";
 		}
 		elsif($kan_str =~ /\\ecrref\{kandict_[a-z]\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/)
@@ -1187,4 +1206,96 @@ sub insert_target()
 		print OUT "<div id=\"". $hyperdef ."\"></div>\n";
 		$hyperdef = "";
 	}
+}
+
+
+sub manage_duplicates()
+{
+	my($dupline,$id,$prevocc,$wl,$occ,$linecopy,$item);
+	
+	open(HASH, "$hashfile") or die("can't open $hashfile\n");
+
+	$dupline = <HASH>;
+	$id = 1;
+
+	$prevocc = 0;
+
+	while($dupline)
+	{
+		chop($dupline);
+		
+		#print $line . "->xid" . $id . "\n";
+		
+		if($dupline =~ /(.*)\(([0-9]+)\)/)
+		{
+			$wl = $1;
+			$occ = $2;
+			
+			if( ($prevocc == 0) || ($occ == ($prevocc + 1)) )
+			{
+				$linecopy = $dupline;
+				$linecopy =~ s/"//g;
+				$linecopy =~ s/,//g;
+				$item = $label . $id . ";" . $linecopy;
+				push(@list,$item);
+		
+				$prevocc = $occ;	
+			}
+			else
+			{
+				create_hash();
+				$prevocc = 0;
+				@list = ();
+				$linecopy = $dupline;
+				$linecopy =~ s/"//g;
+				$linecopy =~ s/,//g;
+				$item = $label . $id . ";" . $linecopy;
+				push(@list,$item);
+		
+				$prevocc = $occ;			
+			}
+		}
+		else
+		{
+			if(@list > 0)
+			{
+				create_hash();			
+			}
+			$prevocc = 0;
+			@list = ();	
+		}
+		
+		$dupline = <HASH>;
+		$id++;
+	}
+
+	close(HASH);
+}
+
+
+sub create_hash()
+{
+	my($l,$tmpword,$hashid,$m,$seealso_data,$nextid,$nextword);
+	
+	for($l=0;$l<@list;$l++)
+	{
+		#print $list[$l] . "\n";			
+		($hashid,$tmpword) = split(/;/,$list[$l]);
+		$mainhash{$hashid} = "";
+		
+		for($m=0;$m<@list;$m++)
+		{
+			if($m != $l)
+			{
+				($nextid,$nextword) = split(/;/,$list[$m]);
+				$nextword =~ s/(.*)\(([0-9]+)\)/\${}^\2\$\1/;
+				$nextword =~ s/hyp-/-/;
+				$mainhash{$hashid} = $mainhash{$hashid} . "<span class=\"seealsoword\"><a href=\"#". $nextid . "\">". $nextword ."</a></span>&nbsp;&nbsp;";
+			}
+		}
+		$mainhash{$hashid} =~ s/&nbsp;&nbsp;$//g;
+		#print $hashid . "-->" . $mainhash{$hashid} . "\n";
+	}	
+	
+	#print "\n\n";
 }
