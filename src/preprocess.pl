@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
-$label = "xid";
-$letter = "X";
+$label = "yid";
+$letter = "Y";
 
 $file =  $letter . "/texfiles/letter_". lc($letter) .".tex";
 $output = $letter . "/html/". lc($letter) ."_uni.html";
@@ -42,6 +42,8 @@ $preamble = "<!doctype html>
 	  });
 	</script>
 	<script type=\"text/javascript\" src=\"../../../MathJax/MathJax.js?config=TeX-AMS_HTML-full\"></script>
+	<script src=\"../../../js/jquery-2.0.0.min.js\"></script>
+	<script src=\"../../../js/fixhref.js\"></script>	
 	<title>Univerity of Mysore - English Kannada Dictionary</title>
 </head>
 <body>
@@ -152,6 +154,22 @@ while($line)
 		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";			
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform6 ."</span>\n";		
 	}
+	elsif($line =~ /\\wordf\{(.*)\}/)
+	{
+		$wordfform7 = $1;
+		
+		insert_target();
+		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";
+			print OUT "\t<span class=\"engWord clr1 itl\">".  $wordform7 ."</span>\n";
+	}
+	elsif($line =~ /\\wordwosas\{(.*)\}\{(.*)\}/)
+	{
+		$wordform8 = $2;
+				
+		insert_target();
+		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";	
+			print OUT "\t<span class=\"engWord clr1\">".  $wordform8 ."</span>\n";
+	}
 	elsif($line =~ /\\pron\{(.*)\}/)
 	{
 		$pron = $1;
@@ -261,16 +279,37 @@ while($line)
 	{
 		$numline = preprocess($1);
 		$numline = gen_unicode($numline);
-		print OUT "<li>". $numline  ."</li>\n";
+		if($hypertarget ne "")
+		{
+			print OUT "<li id=\"" . $hypertarget . "\">" . $numline  ."</li>\n";
+			$hypertarget = "";
+		}
+		elsif($hyperdef ne "")
+		{
+			print OUT "<li id=\"" . $hyperdef. "\">" . $numline  . "</li>\n";
+			$hyperdef = "";
+		}
+		else
+		{	
+			print OUT "<li>". $numline  ."</li>\n";
+		}
+	}
+	elsif($line =~ /\\addanothertarget\{(.*)\}\{(.*)\}/)
+	{
+		$hypertarget = $1;
+		$hypertarget = replace_special($hypertarget);
+		$hypertarget =~ s/ /_/g;
 	}
 	elsif($line =~ /\\hypertarget\{(.*)\}\{\}/)
 	{
 		$hypertarget = $1;
+		$hypertarget = replace_special($hypertarget);		
 		$hypertarget =~ s/ /_/g;
 	}
 	elsif($line =~ /\\hyperdef\{[A-Z]\}\{(.*)\}\{\}/)
 	{
 		$hyperdef = $1;
+		$hyperdef = replace_special($hyperdef);
 		$hyperdef =~ s/ /_/g;
 	}
 	elsif($line =~ /^%END/)
@@ -347,6 +386,8 @@ sub gen_unicode()
 	my ($tmp,$flg,$i,$endash_uni,$endash,$flag);
 	$flg = 1;
 
+	$kan_str =~ s/\\kern2pt //g;
+	$kan_str =~ s/\\kern2pt//g;
 	$kan_str =~ s/\\char144/sx/g;
 	$kan_str =~ s/\\&/!E!&amp;!K!/g;
 	$kan_str =~ s/\\bf//g;
@@ -397,7 +438,8 @@ sub gen_unicode()
 		elsif($kan_str =~ /\\ecrlinktarget\{(.*?)\}\{(.*?)\}/)
 		{
 			$target = $1;
-			$kan_str =~ s/\\ecrlinktarget\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#\1">\2<\/a><\/span>!K!/;
+			$target = replace_special($target);
+			$kan_str =~ s/\\ecrlinktarget\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$target">\2<\/a><\/span>!K!/;
 			#~ print $kan_str . "\n";
 		}
 		elsif($kan_str =~ /\\ecrref\{kandict_[a-z]\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/)
@@ -1300,4 +1342,15 @@ sub create_hash()
 	}	
 	
 	#print "\n\n";
+}
+
+sub replace_special()
+{
+	my($mytarget) = @_;
+	
+	$mytarget =~ s/\(/_/g;
+	$mytarget =~ s/\)/_/g;
+	$mytarget =~ s/ /_/g;
+	
+	return ($mytarget);
 }

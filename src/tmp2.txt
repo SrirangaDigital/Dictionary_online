@@ -1,309 +1,222 @@
-\word[y(1)]{Y, y} 
-\word[Y(2)]{Y} 
-\word[Y(3)]{Y} 
-\word[Y(4)]{y.} 
-\word{y-} 
-\word[hyp-y(1)]{-y}  
-\word[hyp-y(2)]{-y} 
-\word[hyp-y(3)]{-y} 
-\word{yabbie} 
-\word{yabby} 
-\word[yacht(1)]{yacht} 
-\word[yacht(2)]{yacht} 
-\word{yacht-club} 
-\word{yachting} 
-\word{yachtsman} 
-\word[yack(1)]{yack} 
-\word[yack(2)]{yack} 
-\word{yacka} 
-\word{yacker} 
-\word[yackety-yack(1)]{yackety-yack} 
-\word[yackety-yack(2)]{yackety-yack} 
-\word{yaffle} 
-\word{yager} 
-\word{yah} 
-\word{yahoo} 
-\word{Yahveh} 
-\word{Yahvist} 
-\word{Yahweh} 
-\word{Yahwist} 
-\word{yak} 
-\word{yakka} 
-\wordRemoveSpace{Yale-lock}{Yale lock} 
-\word{yam} 
-\word[yammer(1)]{yammer} 
-\word[yammer(2)]{yammer} 
-\word{yammerer} 
-\word[yandy(1)]{yandy} 
-\word[yandy(2)]{yandy} 
-\word{yang}  
-\word[yank(1)]{yank} 
-\word[yank(2)]{yank} 
-\word[Yank(3)]{Yank} 
-\word{Yankee} 
-\word{Yankeedom} 
-\wordnospeech{Yankee Doodle}{Yankee Doodle} 
-\word{Yankeefy} 
-\word{Yankeeism} 
-\word[yap(1)]{yap} 
-\word[yap(2)]{yap} 
-\word{yapock} 
-\word{yapok} 
-\word{yapp} 
-\word{yapper} 
-\word{yarborough} 
-\word[yard(1)]{yard} 
-\word[yard(2)]{yard} 
-\word[yard(3)]{yard} 
-\word{yardage} 
-\word{yard-arm} 
-\word{yard-man} 
-\word{yard-master} 
-\word{yardstick} 
-\word{yarmulka} 
-\word{yarmulke} 
-\word[yarn(1)]{yarn} 
-\word[yarn(2)]{yarn} 
-\word{yarran} 
-\word{yarrow} 
-\word{yashmak} 
-\word{yataghan} 
-\word[yaw(1)]{yaw} 
-\word[yaw(2)]{yaw} 
-\word{yawl} 
-\word[yawn(1)]{yawn}  
-\word[yawn(2)]{yawn} 
-\word{yawner} 
-\word{yawningly} 
-\word[yawp(1)]{yawp} 
-\word[yawp(2)]{yawp} 
-\word{yawper} 
-\word{yaws} 
-\wordnospeech{Yb}{Yb}
-\word{Y-chromosome} 
-\word{yclept} 
-\word{Y-cross} 
-\wordnospeech{yd.}{yd.}
-\wordnospeech{yds.}{yds.}
-\word[ye(1)]{ye} 
-\word[ye(2)]{ye} 
-\word[yea(1)]{yea} 
-\word[yea(2)]{yea} 
-\word{yeah} 
-\word{yean} 
-\word{yeanling} 
-\word{year} 
-\word{yearbook} 
-\word[yearling(1)]{yearling} 
-\word[yearling(2)]{yearling} 
-\word{year-long} 
-\word[yearly(1)]{yearly} 
-\word[yearly(2)]{yearly} 
-\word{yearn} 
-\word{yearner} 
-\word[yearning(1)]{yearning} 
-\word[yearning(2)]{yearning} 
-\word{year-round} 
-\word{yeast} 
-\word{yeastily} 
-\word{yeastiness} 
-\word{yeastless} 
-\word{yeastlike} 
-\word{yeasty} 
-\word{yegg} 
-\word[yell(1)]{yell} 
-\word[yell(2)]{yell} 
-\word[yellow(1)]{yellow} 
-\word[yellow(2)]{yellow} 
-\word[yellow(3)]{yellow} 
-\wordnospeech{yellow arsenic}{yellow arsenic}
-\word{yellowback} 
-\word{yellow-belly} 
-\wordnospeech{yellow card}{yellow card}
-\wordnospeech{yellow cedar}{yellow cedar}
-\wordspecial{yellow dog}{1}{1}{\ecrlink{yellow-dog(1)}{\textcolor{superscript}{$^2$}\eng{yellow-dog}}} 
-\wordspecial{yellow-dog}{1}{2}{\ecrlink{yellow dog(1)}{\textcolor{superscript}{$^1$}\eng{yellow dog}}} 
-\wordnospeech{yellow fever}{yellow fever}
-\wordnospeech{yellow flag}{yellow flag}
-\word{yellowhammer} 
-\word{yellowish} 
-\wordnospeech{yellow jack}{yellow jack}
-\word{yellowlegs} 
-\wordnospeech{yellow line}{yellow line}
-\word{yellowly} 
-\wordnospeech{yellow metal}{yellow metal}
-\word{yellowness} 
-\wordnospeech{Yellow Pages}{Yellow Pages}
-\wordnospeech{yellow peril}{yellow peril}
-\wordnospeech{yellow rattle}{yellow rattle} 
-\wordnospeech{yellow rocket}{yellow rocket} 
-\wordnospeech{yellow soap}{yellow soap}
-\wordnospeech{yellow spot}{yellow spot}
-\wordnospeech{yellow streak}{yellow streak}
-\wordnospeech{yellow wagtail}{yellow wagtail}
-\word{yellowy} 
-\word[yelp(1)]{yelp} 
-\word[yelp(2)]{yelp} 
-\word{yelper} 
-\word[yen(1)]{yen} 
-\word[yen(2)]{yen} 
-\word[yen(3)]{yen} 
-\word{yeoman} 
-\word{yeomanly} 
-\word{yeomanry} 
-\wordnospeech{yeoman service}{yeoman service}
-\wordnospeech{yeoman's service}{yeoman's service}
-\wordnospeech{Yeoman Usher}{Yeoman Usher}
-\word[yep(1)]{yep}
-\word[yep(2)]{yep} 
-\wordwithhyphen{hyp-yer}{-yer} 
-\wordRemoveSpace{yerba-mate}{yerba mate}
-\word[yes(1)]{yes} 
-\word[yes(2)]{yes} 
-\word{yes-man} 
-\word{yester-} 
-\word[yesterday(1)]{yesterday} 
-\word[yesterday(2)]{yesterday} 
-\word{yesteryear} 
-\word[yet(1)]{yet} 
-\word[yet(2)]{yet} 
-\word{yeti} 
-\word{yew} 
-\word{Y-fronts} 
-\word{Yggdrasil} 
-\wordnospeech{YHA}{YHA}
-\word{Yid} 
-\word[Yiddish(1)]{Yiddish} 
-\word[Yiddish(2)]{Yiddish} 
-\word[Yiddisher(1)]{Yiddisher} 
-\word[Yiddisher(2)]{Yiddisher} 
-\word[yield(1)]{yield} 
-\word[yield(2)]{yield} 
-\word{yielder} 
-\word{yielding} 
-\word{yieldingly} 
-\word{yieldingness} 
-\wordnospeech{yield point}{yield point}
-\word{yin} 
-\wordnospeech{Yin and Yang}{Yin and Yang}
-\word[yip(1)]{yip} 
-\word[yip(2)]{yip} 
-\word{yippee} 
-\word{yippie} 
-\word{yippy} 
-\wordwithhyphen{hyp-yl}{-yl} 
-\word{ylang-ylang} 
-\wordnospeech{YMCA}{YMCA}
-\word{Y-moth} 
-\wordwithhyphen{hyp-yne}{-yne} 
-\word{yob} 
-\word{yobbish} 
-\word{yobbishly} 
-\word{yobbishness} 
-\word{yobbo} 
-\word{yod} 
-\word[yodel(1)]{yodel} 
-\word[yodel(2)]{yodel} 
-\word{yodeller} 
-\word{yoga} 
-\word{yogh} 
-\word{yoghurt} 
-\word{yogi} 
-\word{yogic} 
-\word{yogism} 
-\word{yogurt} 
-\word[yo-heave-ho(1)]{yo-heave-ho} 
-\word[yo-heave-ho(2)]{yo-heave-ho} 
-\word{yo-ho} 
-\word{yo-ho-ho} 
-\word{yoicks} 
-\word[yoke(1)]{yoke} 
-\word[yoke(2)]{yoke} 
-\word{yoke-bone} 
-\word{yokel} 
-\word[yolk(1)]{yolk}  
-\word[yolk(2)]{yolk}  
-\word{yolk-bag} 
-\word{yolked} 
-\word{yolkless} 
-\word{yolk-sac} 
-\word{yolky}  
-\wordRemoveSpace{Yom Kippur}{Yom Kippur} 
-\word{yomp} 
-\word[yon(1)]{yon} 
-\word[yon(2)]{yon} 
-\word[yon(3)]{yon} 
-\word[yonder(1)]{yonder} 
-\word[yonder(2)]{yonder} 
-\word{yoni} 
-\word{yonks} 
-\word{yoohoo} 
-\word{yore} 
-\word{york} 
-\word{yorker} 
-\word[Yorkist(1)]{Yorkist} 
-\word[Yorkist(2)]{Yorkist} 
-\wordnospeech{Yorks.}{Yorks.}
-\wordRemoveSpace{Yorkshire-fog}{Yorkshire fog}  
-\word{Yorkshireman} 
-\wordnospeech{Yorkshire pudding}{Yorkshire pudding}
-\wordnospeech{Yorkshire terrier}{Yorkshire terrier}
-\word{Yorkshirewoman} 
-\word{Yoruba} 
-\word{you} 
-\word{you-all} 
-\word{you'd} 
-\word{you'll} 
-\word[young(1)]{young} 
-\word[young(2)]{young} 
-\wordnospeech{young blood}{young blood}
-\wordnospeech{young fustic}{young fustic}  
-\word{youngish} 
-\word{youngling} 
-\word{youngster} 
-\wordspecial{Young Turk}{1}{1}{\ecrlink{young turk(1)}{\textcolor{superscript}{$^2$}\eng{young turk}}}  
-\wordspecial{young turk}{1}{2}{\ecrlink{Young Turk(1)}{\textcolor{superscript}{$^1$}\eng{Young Turk}}}  
-\word{younker} 
-\word{your} 
-\word{you're} 
-\word{yours} 
-\word{yourself} 
-\word{youth} 
-\wordnospeech{youth centre}{youth centre}
-\wordnospeech{youth club}{youth club}
-\word{youthful} 
-\word{youthfully} 
-\word{youthfulness}  
-\wordnospeech{youth hostel}{youth hostel}  
-\wordnospeech{youth hosteller}{youth hosteller}
-\word{you've} 
-\word[yowl(1)]{yowl} 
-\word[yowl(2)]{yowl} 
-\word[yo-yo(1)]{yo-yo} 
-\word[yo-yo(2)]{yo-yo} 
-\wordnospeech{yr.}{yr.}
-\wordnospeech{yrs.}{yrs.}
-\word{ytterbium} 
-\word{yttrium} 
-\word{yuan} 
-\word{yucca} 
-\word[yuck(1)]{yuck} 
-\word[yuck(2)]{yuck} 
-\word{yucky} 
-\word[Yugoslav(1)]{Yugoslav} 
-\word[Yugoslav(2)]{Yugoslav} 
-\word[Yugoslavian(1)]{Yugoslavian} 
-\word[Yugoslavian(2)]{Yugoslavian} 
-\word[yuk(1)]{yuk} 
-\word[yuk(2)]{yuk} 
-\word{yukky} 
-\word{yule} 
-\word{yule-log} 
-\word{yule-tide} 
-\word{yummy} 
-\word{yum-yum} 
-\word[yup(1)]{yup} 
-\word[yup(2)]{yup} 
-\word{yuppy} 
-\word{yurt} 
-\wordnospeech{YWCA}{YWCA}
+\wordwosas{Z}{Z} 
+\word{zabaglione} 
+\word{zaffer} 
+\word{zaffre} 
+\word{zag} 
+\word{zambo} 
+\word{zamindar} 
+\word{zanily} 
+\word{zaniness} 
+\word{ZANU} 
+\word[zany(1)]{zany} 
+\word[zany(2)]{zany} 
+\word{zap} 
+\word{zapateado} 
+\word{zappy} 
+\word{ZAPU} 
+\word{zarape} 
+\word[Zarathustrian(1)]{Zarathustrian} 
+\word[Zarathustrian(2)]{Zarathustrian} 
+\word{zareba} 
+\word{zariba} 
+\wordf{zarzuela} 
+\word{zax} 
+\word{zeal} 
+\word{zealot} 
+\word{zealotry} 
+\word{zealous} 
+\word{zealously} 
+\word{zealousness} 
+\word{zebec(k)} 
+\word[zebra(1)]{zebra} 
+\word[zebra(2)]{zebra} 
+\wordnospeech{zebra crossing}{zebra crossing}  
+\word{zebrine} 
+\word{zebu} 
+\wordnospeech{Zech.}{Zech.}
+\word{zed} 
+\word{zedoary} 
+\word{zee} 
+\wordRemoveSpace{Zeeman-effect}{Zeeman effect} 
+\word{zein} 
+\wordf{Zeitgeist} 
+\word{zemindar} 
+\word{Zen} 
+\word{zenana} 
+\word{Zend} 
+\word{Zend-Avesta} 
+\wordRemoveSpace{Zener-cards}{Zener cards}  
+\word{Zenist} 
+\word{zenith} 
+\word{zenithal} 
+\wordnospeech{zenithal projection}{zenithal projection}  
+\wordnospeech{zenith distance}{zenith distance}  
+\word{Zennist} 
+\word{zeolite} 
+\word{zeolitic} 
+\wordnospeech{Zeph.}{Zeph.}
+\word{zephyr} 
+\word{Zeppelin} 
+\word[zero(1)]{zero} 
+\word[zero(2)]{zero} 
+\word[zero(3)]{zero} 
+\word{zero-hour} 
+\wordnospeech{zero option}{zero option}  
+\word{zero-rated} 
+\word{zero-sum} 
+\word{zeroth} 
+\word{zest} 
+\word{zestful} 
+\word{zestfully} 
+\word{zeta} 
+\word{zetetic} 
+\word{zeugma} 
+\word{zeugmatic} 
+\word{Zeus} 
+\word{zho} 
+\word{zibet} 
+\word{zidovudine} 
+\word{ziff} 
+\word{ziggurat}  
+\word[zigzag(1)]{zigzag} 
+\word[zigzag(2)]{zigzag} 
+\word[zigzag(3)]{zigzag} 
+\word[zigzag(4)]{zigzag} 
+\word{zigzaggedly} 
+\word{zilch} 
+\word{zillah} 
+\word{zillion} 
+\word[zillionth(1)]{zillionth} 
+\word[zillionth(2)]{zillionth} 
+\word[zinc(1)]{zinc} 
+\word[zinc(2)]{zinc} 
+\wordnospeech{zinc blende}{zinc blende}  
+\wordnospeech{zinc chloride}{zinc chloride}  
+\word{zinced} 
+\word[zinco(1)]{zinco} 
+\word[zinco(2)]{zinco} 
+\word[zincograph(1)]{zincograph} 
+\word[zincograph(2)]{zincograph} 
+\word{zincography} 
+\word{zincotype} 
+\wordnospeech{zinc oxide}{zinc oxide}  
+\wordnospeech{zinc sulphate}{zinc sulphate}  
+\word[zing(1)]{zing} 
+\word[zing(2)]{zing} 
+\word{Zingaro} 
+\word{zinger} 
+\word{zingy} 
+\word{zinnia} 
+\word{Zion} 
+\word{Zionism} 
+\word{Zionist} 
+\word[zip(1)]{zip} 
+\word[zip(2)]{zip} 
+\word[zip(3)]{zip} 
+\word{zip-code} 
+\word{zip-fastener} 
+\word[zipper(1)]{zipper} 
+\word[zipper(2)]{zipper} 
+\word{zippered} 
+\word{zippily} 
+\word{zippiness} 
+\word{zippy} 
+\word{zircon} 
+\word{zirconium} 
+\word{zit} 
+\word{zither} 
+\word{zitherist} 
+\word[zizz(1)]{zizz} 
+\word[zizz(2)]{zizz} 
+\word{zloty} 
+\wordnospeech{Zn}{Zn}
+\word{zodiac} 
+\word{zodiacal} 
+\wordnospeech{zodiacal light}{zodiacal light} 
+\word{zoetrope} 
+\word{zoic} 
+\wordRemoveSpace{Zollner's-lines}{Zollner's lines} 
+\wordf{zollverein} 
+\word{zombi} 
+\word{zombie} 
+\word{zonal} 
+\word{zonary} 
+\word{zonate} 
+\word{zonation}  
+\word{zonda} 
+\word[zone(1)]{zone} 
+\word[zone(2)]{zone} 
+\word{zoning} 
+\word[zonk(1)]{zonk} 
+\word[zonk(2)]{zonk} 
+\word{zoo} 
+\word{zoo-} 
+\word{zoogeographic} 
+\word{zoogeographical} 
+\word{zoogeographically} 
+\word{zoogeography} 
+\word{zoography} 
+\word{zooid} 
+\word{zooidal} 
+\word{zoolatry} 
+\word{zoological} 
+\wordnospeech{zoological garden}{zoological garden}  
+\word{zoologically} 
+\word{zoologist} 
+\word{zoology} 
+\word[zoom(1)]{zoom} 
+\word[zoom(2)]{zoom} 
+\word{zoomancy} 
+\wordnospeech{zoom lens}{zoom lens} 
+\word{zoomorphic} 
+\word{zoomorphism} 
+\word{zoophyte} 
+\word{zoophytic} 
+\word{zooplankton} 
+\word{zoospore} 
+\word{zoosporic} 
+\word{zootomy} 
+\wordRemoveSpace{zoot-suit}{zoot suit} 
+\word{zori} 
+\word{zoril} 
+\word{zorille} 
+\word[Zoroastrian(1)]{Zoroastrian} 
+\word[Zoroastrian(2)]{Zoroastrian} 
+\word{Zoroastrianism}  
+\word{Zouave} 
+\word{zounds} 
+\wordnospeech{ZPG}{ZPG} 
+\wordnospeech{Zr}{Zr}  
+\word{zucchetto} 
+\word{zucchini} 
+\word{zugzwang} 
+\word[Zulu(1)]{Zulu} 
+\word[Zulu(2)]{Zulu} 
+\word{zwieback} 
+\word[Zwinglian(1)]{Zwinglian} 
+\word[Zwinglian(2)]{Zwinglian}  
+\word{zwitterion} 
+\word{zygal} 
+\word{zygo-} 
+\word[zygodactyl(1)]{zygodactyl} 
+\word[zygodactyl(2)]{zygodactyl} 
+\word{zygodactylous} 
+\word{zygoma} 
+\word{zygomatic} 
+\wordnospeech{zygomatic arch}{zygomatic arch} 
+\wordnospeech{zygomatic bone}{zygomatic bone} 
+\word{zygomorphic} 
+\word{zygomorphous} 
+\word{zygosis} 
+\word{zygospore}  
+\word{zygote}  
+\word{zygotic} 
+\word{zygotically} 
+\word{zymase} 
+\word{zymological} 
+\word{zymologist} 
+\word{zymology} 
+\word{zymosis} 
+\word{zymotic}  
+\wordnospeech{zymotic disease}{zymotic disease} 
+\word{zymurgy} 
