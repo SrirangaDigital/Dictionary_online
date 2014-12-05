@@ -1,13 +1,15 @@
 #!/usr/bin/perl
 
-$file = "Y/texfiles/letter_y.tex";
-$output = "Y/html/y_uni.html";
-$pictfile = "Y/texfiles/y_figs_list.tex";
-$indexfile = "Y/texfiles/indexoflettery.tex";
-$hashfile = "Y/texfiles/dictionarywords.tex";
+$label = "xid";
+$letter = "X";
 
-$label = "yid";
-$letter = "Y";
+$file =  $letter . "/texfiles/letter_". lc($letter) .".tex";
+$output = $letter . "/html/". lc($letter) ."_uni.html";
+$pictfile = $letter . "/texfiles/". lc($letter) ."_figs_list.tex";
+$indexfile = $letter . "/texfiles/indexofletter". lc($letter) .".tex";
+$hashfile = $letter . "/texfiles/dictionarywords.tex";
+
+
 $glcount = 0;
 
 @list = ();
