@@ -1,6 +1,10 @@
 [NKjTl][kKgGcCjJTDNtdnpPbBmyrlvsShL][h]?
+[KjTNl]M
 \word
+\word[
 \wordRemoveSpace
 \wordnospeech
 \wordspecial
 \wordwithhyphen
+\wordf
+\wordwosas

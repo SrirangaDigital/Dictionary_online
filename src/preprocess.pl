@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
-$label = "yid";
-$letter = "Y";
+$label = "zid";
+$letter = "Z";
 
 $file =  $letter . "/texfiles/letter_". lc($letter) .".tex";
 $output = $letter . "/html/". lc($letter) ."_uni.html";
@@ -146,13 +146,14 @@ while($line)
 		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";			
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform5 ."</span>\n";		
 	}
-	elsif($line =~ /\\wordspecial\{(.*)\}\{[0-9]\}\{[0-9]\}\{(.*)\}/)
+	elsif($line =~ /\\wordspecial\{(.*)\}\{([0-9]+)\}\{([0-9]+)\}\{(.*)\}/)
 	{
-		$wordform6 = $1;		
+		$wordform6 = $1;
+		$word_occ = $3;
 		
 		insert_target();
 		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";			
-			print OUT "\t<span class=\"engWord clr1\">".  $wordform6 ."</span>\n";		
+			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform6 ."</span>\n";		
 	}
 	elsif($line =~ /\\wordf\{(.*)\}/)
 	{
@@ -308,7 +309,7 @@ while($line)
 	}
 	elsif($line =~ /\\hyperdef\{[A-Z]\}\{(.*)\}\{\}/)
 	{
-		$hyperdef = $1;
+		$hyperdef = $2;
 		$hyperdef = replace_special($hyperdef);
 		$hyperdef =~ s/ /_/g;
 	}
@@ -412,11 +413,11 @@ sub gen_unicode()
 		#print "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH\n";
 		if($kan_str =~ /\{\\rm (.*?)\}/)
 		{
-			$kan_str =~ s/\{\\rm (.*?)\}/!E!\1!K!/;
+			$kan_str =~ s/\{\\rm (.*?)\}/!E!<span class="eng">\1<\/span>!K!/;
 		}
 		elsif($kan_str =~ /\\eng\{(.*?)\}/)
 		{
-			$kan_str =~ s/\\eng\{(.*?)\}/!E!\1!K!/;
+			$kan_str =~ s/\\eng\{(.*?)\}/!E!<span class="eng">\1<\/span>!K!/;
 		}
 		elsif($kan_str =~ /\\engit\{(.*?)\}/)
 		{
@@ -442,9 +443,12 @@ sub gen_unicode()
 			$kan_str =~ s/\\ecrlinktarget\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$target">\2<\/a><\/span>!K!/;
 			#~ print $kan_str . "\n";
 		}
-		elsif($kan_str =~ /\\ecrref\{kandict_[a-z]\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/)
+		elsif($kan_str =~ /\\ecrref\{kandict_([a-z])\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/)
 		{
-			$kan_str =~ s/\\ecrref\{kandict_[a-z]\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#">\2<\/a><\/span>!K!/g;
+			$ecrref_alpha = $1;
+			$ecrref_target = replace_special($2);
+			$ecrref_file = $ecrref_alpha . "_uni.html#" . $ecrref_target;
+			$kan_str =~ s/\\ecrref\{kandict_([a-z])\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="$ecrref_file">\3<\/a><\/span>!K!/g;
 		}
 		#~ elsif($kan_str =~ /\$(.*?)\$/)
 		#~ {
