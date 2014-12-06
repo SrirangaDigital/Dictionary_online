@@ -8,6 +8,11 @@ Primary style
  src: url('siddhanta.ttf');
 }
 
+@font-face {
+ font-family: 'Gubbi';
+ src: url('Gubbi.ttf');
+}
+
 html * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -650,6 +655,7 @@ Main components
     min-height: 200px;
 }
 .word .wBody{
+	font-family: Gubbi;
     margin: 5px 0 0 50px;
     font-size: 0.8em;
 }
@@ -667,18 +673,25 @@ Main components
     line-height: 1.5;
 }
 .engWord{
+	font-family: serif;
     margin-right: 10px;
 }
 .kanWord{
+	font-family: Gubbi;
     font-size: 0.8em;
 }
 .grammarLabel{
+	font-family: Gubbi;
     font-style: italic;
     font-size: 0.8em;
     margin: 10px 0px 5px 15px;
     color: #950C0C;
     padding-bottom: 5px;
     border-bottom: 1px solid #DEDEDE;        
+}
+
+.eng{
+	font-family: serif;	
 }
 
 .engit{
@@ -691,6 +704,7 @@ p.bracket_grp{
 }
 
 .crossref{
+	font-family: serif;	
 	color: #3372df;
 }
 .kanWord img{
@@ -713,7 +727,9 @@ div.seealso{
 	margin-bottom: 1em;
 }
 .seealsoword{
+	font-family: serif;
 	font-style: italic;
+	font-weight: bold;
 	font-size: 0.7em;
 	color: #3372df;
 }
