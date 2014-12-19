@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
-$label = "yid";
-$letter = "Y";
+$label = "zid";
+$letter = "Z";
 
 $file =  $letter . "/texfiles/letter_". lc($letter) .".tex";
 $output = $letter . "/html/". lc($letter) ."_uni.html";
