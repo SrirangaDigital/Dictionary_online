@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
-$label = "zid";
-$letter = "Z";
+$label = "yid";
+$letter = "Y";
 
 $file =  $letter . "/texfiles/letter_". lc($letter) .".tex";
 $output = $letter . "/html/". lc($letter) ."_uni.html";
@@ -11,6 +11,7 @@ $hashfile = $letter . "/texfiles/dictionarywords.tex";
 
 
 $glcount = 0;
+$imgcount = 0;
 
 @list = ();
 %mainhash = ();
@@ -36,13 +37,15 @@ $preamble = "<!doctype html>
 	<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
 	<link rel=\"stylesheet\" href=\"../../../css/reset.css\"> <!-- CSS reset -->
 	<link rel=\"stylesheet\" href=\"../../../css/style.css\"> <!-- Resource style -->
+	<link href=\"../../../css/lightbox.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />
 	<script type=\"text/x-mathjax-config\">
 	  MathJax.Hub.Config({
 		tex2jax: {inlineMath: [[\"\$\",\"\$\"],[\"\\\\(\",\"\\\\)\"]]}
 	  });
 	</script>
 	<script type=\"text/javascript\" src=\"../../../MathJax/MathJax.js?config=TeX-AMS_HTML-full\"></script>
-	<script src=\"../../../js/jquery-2.0.0.min.js\"></script>
+	<script src=\"../../../js/jquery-1.11.0.min.js\"></script>
+	<script src=\"../../../js/lightbox.min.js\"></script>	
 	<script src=\"../../../js/fixhref.js\"></script>	
 	<title>Univerity of Mysore - English Kannada Dictionary</title>
 </head>
@@ -157,8 +160,7 @@ while($line)
 	}
 	elsif($line =~ /\\wordf\{(.*)\}/)
 	{
-		$wordfform7 = $1;
-		
+		$wordform7 = $1;
 		insert_target();
 		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";
 			print OUT "\t<span class=\"engWord clr1 itl\">".  $wordform7 ."</span>\n";
@@ -425,7 +427,12 @@ sub gen_unicode()
 		}
 		elsif($kan_str =~ /\\imglink\{(.*)\}\{\\raisebox(.*)\{([A-Z])_Pictures\/(.*)\.jpg\}\}\}/)
 		{
-			$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
+			$imagecaption = $1;
+			$imagecaption =~ s/figure$//;
+			$imgcount++;
+			$lightbox_img_str = "imgae-" . $imgcount;
+			#$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
+			$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="..\/Pictures\/main\/\4.jpg" data-lightbox="$lightbox_img_str" data-title="$imagecaption"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
 		}
 		elsif($kan_str =~ /\\ecrlink\{(.*?)\}\{(.*?)\}/)
 		{

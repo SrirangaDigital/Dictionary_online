@@ -676,8 +676,9 @@ Main components
 	font-family: serif;
     margin-right: 10px;
 }
-.kanWord{
+.kanWord{	
 	font-family: Gubbi;
+	font-weight: bold;
     font-size: 0.8em;
 }
 .grammarLabel{
