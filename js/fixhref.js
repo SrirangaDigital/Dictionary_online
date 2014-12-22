@@ -8,11 +8,10 @@ var headerHeight = $("header").height();
 
         var target = this.hash,
         $target = $(target);
-		//alert(target);
         $('html, body').stop().animate({
             'scrollTop': $target.offset().top - headerHeight
         }, 1200, 'swing', function () {
-            window.location.hash = target ;
+            window.location.hash = string(target);
         });
 	});
 
