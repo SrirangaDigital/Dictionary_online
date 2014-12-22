@@ -1,10 +1,22 @@
 #!/usr/bin/perl
 
-$label = "yid";
-$letter = "Y";
+$alpha = $ARGV[0];
+
+#print $alpha . "\n";
+
+if(!($alpha =~ /[a-z]/))
+{
+	exit(1);
+}
+
+$label = $alpha . "id";
+$letter = uc($alpha);
+
+#print $label . "->" . $letter . "\n";
+
 
 $file =  $letter . "/texfiles/letter_". lc($letter) .".tex";
-$output = $letter . "/html/". lc($letter) ."_uni.html";
+$output = $letter . "/html/". lc($letter) ."1_uni.html";
 $pictfile = $letter . "/texfiles/". lc($letter) ."_figs_list.tex";
 $indexfile = $letter . "/texfiles/indexofletter". lc($letter) .".tex";
 $hashfile = $letter . "/texfiles/dictionarywords.tex";
@@ -28,7 +40,7 @@ manage_duplicates();
 
 $line = <IN>;
 $wordid = 0;
-
+$wordlabel = "";
 
 $preamble = "<!doctype html>
 <html lang=\"en\" class=\"no-js\">
@@ -95,13 +107,8 @@ while($line)
 	if($line =~ /\\bentry/)
 	{
 		$wordid++;
-		$seealso_id = $label . $wordid;
-		print OUT "<div class=\"word\">\n";
-		if($mainhash{$seealso_id} ne "")
-		{
-			print OUT "\t<div class=\"seealso\"><span style=\"font-style: italic;font-size:0.7em;\">See also</span> ". $mainhash{$seealso_id} . "</div>";
-		}
-		
+		#$seealso_id = $label . $wordid;
+		print OUT "<div class=\"word\">\n";		
 	}
 	elsif($line =~ /\\eentry/)
 	{
@@ -111,66 +118,90 @@ while($line)
 	elsif($line =~ /\\word\{(.*)\}/)
 	{
 		$wordform1 = $1;
+		$wordlabel = replace_special($wordform1); 
 		
 		insert_target();
-		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";
+		insert_seealso($wordlabel);
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform1 ."</span>\n";
 	}
 	elsif($line =~ /\\word\[(.*)\(([0-9]+)\)\]\{(.*)\}/)
 	{
 		$word_occ = $2;
 		$wordform2 = $3;
+		$wordlabel = $1 . "(" . $2 . ")"; 
+		$wordlabel = replace_special($wordlabel); 
 		
-		insert_target();		
-		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";
+		insert_target();
+		insert_seealso($wordlabel);		
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform2 ."</span>\n";
 	}
 	elsif($line =~ /\\wordwithhyphen\{(.*)\}\{(.*)\}/)
 	{
+		$wordlabel = $1;
 		$wordform3 = $2;
-				
-		insert_target();		
-		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";	
+		$wordlabel = replace_special($wordlabel);
+		
+		insert_target();
+		insert_seealso($wordlabel);		
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";	
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform3 ."</span>\n";
 	}	
 	elsif($line =~ /\\wordnospeech\{(.*)\}\{(.*)\}/)
 	{
+		$wordlabel = $1;
 		$wordform4 = $2;
+		$wordlabel = replace_special($wordlabel);
 		
-		insert_target();		
-		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";			
+		insert_target();
+		insert_seealso($wordlabel);		
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";			
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform4 ."</span>\n";
 	}
 	elsif($line =~ /\\wordRemoveSpace\{(.*)\}\{(.*)\}/)
 	{
+		$wordlabel = $1;
 		$wordform5 = $2;
-				
-		insert_target();		
-		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";			
+		$wordlabel = replace_special($wordlabel);
+						
+		insert_target();
+		insert_seealso($wordlabel);
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";			
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform5 ."</span>\n";		
 	}
 	elsif($line =~ /\\wordspecial\{(.*)\}\{([0-9]+)\}\{([0-9]+)\}\{(.*)\}/)
 	{
 		$wordform6 = $1;
+		$wordlabel = $wordform6;
 		$word_occ = $3;
+		$wordlabel = $wordlabel . "(" . $word_occ . ")";
+		$wordlabel = replace_special($wordlabel);
 		
 		insert_target();
-		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";			
+		insert_seealso($wordlabel);
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform6 ."</span>\n";		
 	}
 	elsif($line =~ /\\wordf\{(.*)\}/)
 	{
 		$wordform7 = $1;
+		$wordlabel = replace_special($wordform7);
+
 		insert_target();
-		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";
+		insert_seealso($wordlabel);
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
 			print OUT "\t<span class=\"engWord clr1 itl\">".  $wordform7 ."</span>\n";
 	}
 	elsif($line =~ /\\wordwosas\{(.*)\}\{(.*)\}/)
 	{
+		$wordlabel = $1;
 		$wordform8 = $2;
+		$wordlabel = replace_special($wordlabel);
 				
 		insert_target();
-		print OUT "<div class=\"whead\" id=\"". $label . $wordid . "\">\n";	
+		insert_seealso($wordlabel);
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";	
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform8 ."</span>\n";
 	}
 	elsif($line =~ /\\pron\{(.*)\}/)
@@ -359,6 +390,9 @@ sub output_pictures()
 		if($pictline =~ /\\hypertarget\{(.*)\}\{\}/)
 		{			
 			$pictid = $1;
+			$pictid1 = $pictid;
+			$pictid1 =~ s/:fig$//g;
+			$pictid1 = replace_special($pictid1);
 			print OUT "\t<div class=\"img_display\" id=\"$pictid\">\n";
 				
 		}
@@ -371,7 +405,7 @@ sub output_pictures()
 		elsif($pictline =~ /\\caption\{\\eng\{(.*)\}\}/)
 		{
 			$caption = $1;
-			print OUT "\t\t<div class=\"fig_caption\">$caption</div>\n";
+			print OUT "\t\t<div class=\"crossref\"><a href=\"#$pictid1\">$caption</a></div>\n";
 			print OUT "\t</div>\n";
 		}
 	
@@ -428,7 +462,7 @@ sub gen_unicode()
 		elsif($kan_str =~ /\\imglink\{(.*)\}\{\\raisebox(.*)\{([A-Z])_Pictures\/(.*)\.jpg\}\}\}/)
 		{
 			$imagecaption = $1;
-			$imagecaption =~ s/figure$//;
+			$imagecaption =~ s/:fig$//;
 			$imgcount++;
 			$lightbox_img_str = "imgae-" . $imgcount;
 			#$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
@@ -436,11 +470,12 @@ sub gen_unicode()
 		}
 		elsif($kan_str =~ /\\ecrlink\{(.*?)\}\{(.*?)\}/)
 		{
-			$word = $1;
+			#$word = $1;
 			#~ print "$2";
-			$id = get_index($word);
+			$wordlabel = $1;
+			$wordlabel = replace_special($wordlabel);
 			#~ print "\n\n" . $word . "($id)\n\n";
-			$kan_str =~ s/\\ecrlink\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$id">\2<\/a><\/span>!K!/;
+			$kan_str =~ s/\\ecrlink\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$wordlabel">\2<\/a><\/span>!K!/;
 			#~ print $kan_str . "\n";
 		}
 		elsif($kan_str =~ /\\ecrlinktarget\{(.*?)\}\{(.*?)\}/)
@@ -454,7 +489,7 @@ sub gen_unicode()
 		{
 			$ecrref_alpha = $1;
 			$ecrref_target = replace_special($2);
-			$ecrref_file = $ecrref_alpha . "_uni.html#" . $ecrref_target;
+			$ecrref_file = "../../" . uc($ecrref_alpha) . "/html/" . $ecrref_alpha . "_uni.html#" . $ecrref_target;
 			$kan_str =~ s/\\ecrref\{kandict_([a-z])\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="$ecrref_file">\3<\/a><\/span>!K!/g;
 		}
 		#~ elsif($kan_str =~ /\$(.*?)\$/)
@@ -1291,7 +1326,7 @@ sub manage_duplicates()
 				$linecopy = $dupline;
 				$linecopy =~ s/"//g;
 				$linecopy =~ s/,//g;
-				$item = $label . $id . ";" . $linecopy;
+				$item = $linecopy . ";" . $linecopy;
 				push(@list,$item);
 		
 				$prevocc = $occ;	
@@ -1304,7 +1339,7 @@ sub manage_duplicates()
 				$linecopy = $dupline;
 				$linecopy =~ s/"//g;
 				$linecopy =~ s/,//g;
-				$item = $label . $id . ";" . $linecopy;
+				$item = $linecopy . ";" . $linecopy;
 				push(@list,$item);
 		
 				$prevocc = $occ;			
@@ -1336,6 +1371,7 @@ sub create_hash()
 	{
 		#print $list[$l] . "\n";			
 		($hashid,$tmpword) = split(/;/,$list[$l]);
+		$hashid = replace_special($hashid);
 		$mainhash{$hashid} = "";
 		
 		for($m=0;$m<@list;$m++)
@@ -1345,6 +1381,7 @@ sub create_hash()
 				($nextid,$nextword) = split(/;/,$list[$m]);
 				$nextword =~ s/(.*)\(([0-9]+)\)/\${}^\2\$\1/;
 				$nextword =~ s/hyp-/-/;
+				$nextid = replace_special($nextid);
 				$mainhash{$hashid} = $mainhash{$hashid} . "<span class=\"seealsoword\"><a href=\"#". $nextid . "\">". $nextword ."</a></span>&nbsp;&nbsp;";
 			}
 		}
@@ -1362,6 +1399,17 @@ sub replace_special()
 	$mytarget =~ s/\(/_/g;
 	$mytarget =~ s/\)/_/g;
 	$mytarget =~ s/ /_/g;
+	$mytarget =~ s/'//g;
 	
 	return ($mytarget);
+}
+
+sub insert_seealso()
+{
+	my($seealso_id) = @_;
+
+	if($mainhash{$seealso_id} ne "")
+	{
+		print OUT "\t<div class=\"seealso\"><span style=\"font-style: italic;font-size:0.7em;\">See also</span> ". $mainhash{$seealso_id} . "</div>";
+	}
 }

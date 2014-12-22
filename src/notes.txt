@@ -2,9 +2,9 @@
 [KjTNl]M
 \word
 \word[
-\wordRemoveSpace
-\wordnospeech
-\wordspecial
 \wordwithhyphen
+\wordnospeech
+\wordRemoveSpace
+\wordspecial
 \wordf
 \wordwosas

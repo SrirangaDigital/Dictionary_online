@@ -454,7 +454,7 @@ sub gen_unicode()
 		{
 			$ecrref_alpha = $1;
 			$ecrref_target = replace_special($2);
-			$ecrref_file = $ecrref_alpha . "_uni.html#" . $ecrref_target;
+			$ecrref_file = "../../" . uc($ecrref_alpha) . "/html/" . $ecrref_alpha . "_uni.html#" . $ecrref_target;
 			$kan_str =~ s/\\ecrref\{kandict_([a-z])\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="$ecrref_file">\3<\/a><\/span>!K!/g;
 		}
 		#~ elsif($kan_str =~ /\$(.*?)\$/)
