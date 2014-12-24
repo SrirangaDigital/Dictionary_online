@@ -1400,6 +1400,7 @@ sub replace_special()
 	$mytarget =~ s/\)/_/g;
 	$mytarget =~ s/ /_/g;
 	$mytarget =~ s/'//g;
+	$mytarget =~ s/,//g;
 	
 	return ($mytarget);
 }
