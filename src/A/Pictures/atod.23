@@ -1,0 +1,41 @@
+%!PS
+%%BoundingBox: -19 -19 182 61 
+%%Creator: MetaPost
+%%CreationDate: 2004.04.16:2336
+%%Pages: 1
+%%EndProlog
+%%Page: 1 1
+ 1 0.84314 0.9098 setrgbcolor 0 5.97757
+ dtransform truncate idtransform setlinewidth pop [] 0 setdash 1 setlinejoin
+ 10 setmiterlimit
+newpath -17.5381 -17.5381 moveto
+180.5302 -17.5381 lineto
+180.5302 60.05779 lineto
+-17.5381 60.05779 lineto
+ closepath
+gsave fill grestore stroke
+ 0 setgray 1 setlinecap
+newpath 0 0 moveto
+28.34645 0 lineto
+28.34645 42.51968 lineto
+56.6929 42.51968 lineto stroke
+newpath 0 42.51968 moveto
+0 21.25984 lineto
+56.6929 21.25984 lineto
+56.6929 0 lineto stroke
+newpath 162.9921 0 moveto
+134.64565 0 lineto
+134.64565 42.51968 lineto
+106.2992 42.51968 lineto stroke
+newpath 162.9921 42.51968 moveto
+162.9921 21.25984 lineto
+106.2992 21.25984 lineto
+106.2992 0 lineto stroke
+ 0 1.4944 dtransform truncate idtransform setlinewidth pop
+newpath -17.5381 -17.5381 moveto
+180.5302 -17.5381 lineto
+180.5302 60.05779 lineto
+-17.5381 60.05779 lineto
+ closepath stroke
+showpage
+%%EOF

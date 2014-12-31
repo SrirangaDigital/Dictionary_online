@@ -1,0 +1,42 @@
+This is TeX, Version 3.14159 (Web2C 7.4.5) (format=tex 2005.8.31)  10 SEP 2005 03:21
+\write18 enabled.
+**mproof atod.1 atod.2 atod.3 atod.4 atod.5 atod.6 atod.7 atod.8 atod.23
+(/usr/share/texmf/tex/plain/misc/mproof.tex
+(/usr/share/texmf/tex/generic/misc/epsf.tex
+This is `epsf.tex' v2.7k <10 July 1997>
+\epsffilein=\read0
+\epsfframemargin=\dimen16
+\epsfframethickness=\dimen17
+\epsfrsize=\dimen18
+\epsftmp=\dimen19
+\epsftsize=\dimen20
+\epsfxsize=\dimen21
+\epsfysize=\dimen22
+\pspoints=\dimen23
+\epsfnoopenhelp=\toks12
+)
+\m=\count26
+\n=\count27
+)
+atod.1: BoundingBox: llx = -99 lly = -98 urx = 99 ury = 98 
+atod.1: scaled width = 198.7402pt scaled height = 196.73273pt
+atod.2: BoundingBox: llx = -68 lly = -77 urx = 68 ury = 68 
+atod.2: scaled width = 136.50842pt scaled height = 145.54207pt
+atod.3: BoundingBox: llx = -54 lly = -54 urx = 54 ury = 54 
+atod.3: scaled width = 108.40375pt scaled height = 108.40375pt
+atod.4: BoundingBox: llx = -11 lly = -104 urx = 139 ury = 104 
+atod.4: scaled width = 150.56076pt scaled height = 208.77759pt
+[1]
+atod.5: BoundingBox: llx = -13 lly = -2 urx = 84 ury = 95 
+atod.5: scaled width = 97.36263pt scaled height = 97.36263pt
+atod.6: BoundingBox: llx = -13 lly = -95 urx = 84 ury = 2 
+atod.6: scaled width = 97.36263pt scaled height = 97.36263pt
+atod.7: BoundingBox: llx = -14 lly = -2 urx = 85 ury = 95 
+atod.7: scaled width = 99.3701pt scaled height = 97.36263pt
+atod.8: BoundingBox: llx = -36 lly = -16 urx = 36 ury = 64 
+atod.8: scaled width = 72.26917pt scaled height = 80.29907pt
+[2]
+atod.23: BoundingBox: llx = -21 lly = -21 urx = 184 ury = 64 
+atod.23: scaled width = 205.76637pt scaled height = 85.31776pt
+[3]
+Output written on mproof.dvi (3 pages, 1312 bytes).
