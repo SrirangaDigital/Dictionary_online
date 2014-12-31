@@ -8,3 +8,32 @@
 \wordspecial
 \wordf
 \wordwosas
+
+
+\ecrlink{abbot nuga(1)}{\kan\nuga$(1)$} --> special case to be handled
+\expl{} --> special case to be handled
+
+\hypertarget{acacia(2)}{} 
+\hyperdef{A}{acacia(2)}{}
+If both are in the same place then how to hanlde it
+\ecrlink{accordingpagu1}{according \pagu(1)}
+
+\dictmeaning{
+\hyperdef{A}{aconite pagu}{}
+\eng{winter aconite} erAMtisf kulada, haLadi hU biDuva caLigAlada sasayx.
+}
+
+\hyperdef{A}{Adam(1) nuga(1)}{} 
+\hyperdef{A}{adam(1) nuga(1)}{}
+
+\fiveargsf ad captandum {(vulgus)}(1){ad captandum (vulgus)}
+\fiveargsf ad captandum {(vulgus)}(2){ad captandum (vulgus)}
+
+(${\rm \angle ABC}$ \& ${\rm \angle CBD}$).
+
+\dictmeaning{
+\hyperdef{A}{advice pagu}{}
+\eng{take advice} (\kanmu\ kAnUnu \mo\ pariNatariMda) salahe paDe, tegeduko yA adaraMte naDeduko.
+}
+
+= \ecrlink{affaire de coeur}{\engit{affaire de coeur}}.
