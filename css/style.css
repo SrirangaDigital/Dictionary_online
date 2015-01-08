@@ -690,6 +690,12 @@ Main components
     padding-bottom: 5px;
     border-bottom: 1px solid #DEDEDE;        
 }
+.expl{
+	font-family: Gubbi;
+    font-size: 0.8em;
+    margin: 10px 0px 5px 15px;
+    padding-bottom: 5px;
+}
 
 .eng{
 	font-family: serif;	

@@ -115,95 +115,170 @@ while($line)
 		print OUT "</div>\n";
 		$glcount = 0;
 	}
-	elsif($line =~ /\\word\{(.*)\}/)
+	elsif($line =~ /\\word\{(.*)\}/)#ex: \word{aardvark}
 	{
 		$wordform1 = $1;
 		$wordlabel = replace_special($wordform1); 
-		
+		$wordform1 =~ s/\\&/&amp;/;
+				
 		insert_target();
 		insert_seealso($wordlabel);
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform1 ."</span>\n";
 	}
-	elsif($line =~ /\\word\[(.*)\(([0-9]+)\)\]\{(.*)\}/)
+	elsif($line =~ /\\word\[(.*)\(([0-9]+)\)\]\{(.*)\}/)#ex: \word[abaft(1)]{abaft}
 	{
 		$word_occ = $2;
 		$wordform2 = $3;
 		$wordlabel = $1 . "(" . $2 . ")"; 
 		$wordlabel = replace_special($wordlabel); 
+		$wordform2 =~ s/\\&/&amp;/;
 		
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform2 ."</span>\n";
 	}
-	elsif($line =~ /\\wordwithhyphen\{(.*)\}\{(.*)\}/)
+	elsif($line =~ /\\wordwithhyphen\{(.*)\}\{(.*)\}/)#ex: \wordwithhyphen{hyp-a}{-a}
 	{
 		$wordlabel = $1;
 		$wordform3 = $2;
 		$wordlabel = replace_special($wordlabel);
+		$wordform3 =~ s/\\&/&amp;/;
 		
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";	
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform3 ."</span>\n";
 	}	
-	elsif($line =~ /\\wordnospeech\{(.*)\}\{(.*)\}/)
+	elsif($line =~ /\\wordnospeech\{(.*)\}\{(.*)\}/)#ex: \wordnospeech{a-}{a-}
 	{
 		$wordlabel = $1;
 		$wordform4 = $2;
 		$wordlabel = replace_special($wordlabel);
+		$wordform4 =~ s/\\&/&amp;/;
 		
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";			
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform4 ."</span>\n";
 	}
-	elsif($line =~ /\\wordRemoveSpace\{(.*)\}\{(.*)\}/)
+	elsif($line =~ /\\wordRemoveSpace\{(.*)\}\{(.*)\}/)#ex: \wordRemoveSpace{A,-a}{A, a}
 	{
 		$wordlabel = $1;
 		$wordform5 = $2;
 		$wordlabel = replace_special($wordlabel);
-						
+		$wordform5 =~ s/\\&/&amp;/;
+			
 		insert_target();
 		insert_seealso($wordlabel);
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";			
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform5 ."</span>\n";		
 	}
-	elsif($line =~ /\\wordspecial\{(.*)\}\{([0-9]+)\}\{([0-9]+)\}\{(.*)\}/)
+	elsif($line =~ /\\wordspecial\{(.*)\}\{([0-9]+)\}\{([0-9]+)\}\{(.*)\}/)#ex: \wordspecial{anti-}{1}{1}{\hyperlink{anti(1)}{\quad\textcolor{superscript}{$^2$}\eng{anti}}\hyperlink{anti(2)}{\quad\textcolor{superscript}{$^3$}\eng{anti-}}}
 	{
 		$wordform6 = $1;
 		$wordlabel = $wordform6;
 		$word_occ = $3;
 		$wordlabel = $wordlabel . "(" . $word_occ . ")";
 		$wordlabel = replace_special($wordlabel);
+		$wordform6 =~ s/\\&/&amp;/;
 		
 		insert_target();
 		insert_seealso($wordlabel);
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform6 ."</span>\n";		
 	}
-	elsif($line =~ /\\wordf\{(.*)\}/)
+	elsif($line =~ /\\wordf\{(.*)\}/)#ex: \wordf{a outrance}
 	{
 		$wordform7 = $1;
 		$wordlabel = replace_special($wordform7);
-
+		$wordform7 =~ s/\\&/&amp;/;
+		
 		insert_target();
 		insert_seealso($wordlabel);
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
 			print OUT "\t<span class=\"engWord clr1 itl\">".  $wordform7 ."</span>\n";
 	}
-	elsif($line =~ /\\wordwosas\{(.*)\}\{(.*)\}/)
+	elsif($line =~ /\\wordwosas\{(.*)\}\{(.*)\}/)#ex: \wordwosas{Z}{Z} 
 	{
 		$wordlabel = $1;
 		$wordform8 = $2;
 		$wordlabel = replace_special($wordlabel);
+		$wordform8 =~ s/\\&/&amp;/;
 				
 		insert_target();
 		insert_seealso($wordlabel);
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";	
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform8 ."</span>\n";
 	}
+	elsif($line =~ /\\word\((.*)\[([0-9]+)\]\)\{(.*)\}/)#ex: \word(a cappella[1]){a cappella}
+	{
+		$word_occ = $2;
+		$wordform9 = $3;
+		$wordlabel = $1 . "(" . $2 . ")"; 
+		$wordlabel = replace_special($wordlabel); 
+		$wordform9 =~ s/\\&/&amp;/;
+		
+		insert_target();
+		insert_seealso($wordlabel);		
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
+			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform9 ."</span>\n";
+	}
+	elsif($line =~ /\\fiveargs(.*)\(([0-9]+)\)\{(.*)\}/)#ex: \fiveargs across the board(1){across the board}
+	{
+		$word_occ = $2;
+		$wordform10 = $3;
+		$wordlabel = $1 . "(" . $2 . ")"; 
+		$wordlabel = replace_special($wordlabel); 
+		$wordform10 =~ s/\\&/&amp;/;
+		
+		insert_target();
+		insert_seealso($wordlabel);		
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
+			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform10 ."</span>\n";		
+	}	
+	elsif($line =~ /\\fiveargsf(.*)\(([0-9]+)\)\{(.*)\}/)#ex: \fiveargsf across the board(1){across the board}
+	{
+		$word_occ = $2;
+		$wordform11 = $3;
+		$wordlabel = $1 . "(" . $2 . ")"; 
+		$wordlabel =~ s/{//;
+		$wordlabel =~ s/}//;
+		$wordlabel = replace_special($wordlabel); 
+		$wordform11 =~ s/\\&/&amp;/;
+		
+		insert_target();
+		insert_seealso($wordlabel);		
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
+			print OUT "\t<span class=\"engWord clr1 itl\">". '${}^{'. $word_occ . '}$' . $wordform11 ."</span>\n";
+	}
+	elsif($line =~ /\\wordf\((.*)\[([0-9]+)\]\)\{(.*)\}/)#ex: \wordf(ad personam[1]){ad personam} 
+	{
+		$word_occ = $2;
+		$wordform12 = $3;
+		$wordlabel = $1 . "(" . $2 . ")"; 
+		$wordlabel = replace_special($wordlabel); 
+		$wordform12 =~ s/\\&/&amp;/;
+		
+		insert_target();
+		insert_seealso($wordlabel);		
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
+			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform12 ."</span>\n";
+	}	
+	elsif($line =~ /\\wordf\[(.*)\(([0-9]+)\)\]\{(.*)\}/)#ex: \wordf[accelerando(1)]{accelerando}
+	{
+		$word_occ = $2;
+		$wordform13 = $3;
+		$wordlabel = $1 . "(" . $2 . ")"; 
+		$wordlabel = replace_special($wordlabel); 
+		$wordform13 =~ s/\\&/&amp;/;
+		
+		insert_target();
+		insert_seealso($wordlabel);		
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
+			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform13 ."</span>\n";
+	}	
 	elsif($line =~ /\\pron\{(.*)\}/)
 	{
 		$pron = $1;
@@ -241,6 +316,15 @@ while($line)
 
 		print OUT "<div class=\"grammarLabel\">\n";
 		print OUT "\t<span>". $gl ."</span>\n";
+		print OUT "</div>\n";		
+	}
+	elsif($line =~ /\\expl\{(.*)\}/)
+	{
+		$expl = preprocess($1);
+		$expl = gen_unicode($expl);
+
+		print OUT "<div class=\"expl\">\n";
+		print OUT "\t<span>". $expl ."</span>\n";
 		print OUT "</div>\n";		
 	}
 	elsif($line =~ /\\bmng/)
@@ -332,19 +416,16 @@ while($line)
 	{
 		$hypertarget = $1;
 		$hypertarget = replace_special($hypertarget);
-		$hypertarget =~ s/ /_/g;
 	}
 	elsif($line =~ /\\hypertarget\{(.*)\}\{\}/)
 	{
 		$hypertarget = $1;
-		$hypertarget = replace_special($hypertarget);		
-		$hypertarget =~ s/ /_/g;
+		$hypertarget = replace_special($hypertarget);
 	}
-	elsif($line =~ /\\hyperdef\{[A-Z]\}\{(.*)\}\{\}/)
+	elsif($line =~ /\\hyperdef\{([A-Z])\}\{(.*)\}\{\}/)
 	{
 		$hyperdef = $2;
 		$hyperdef = replace_special($hyperdef);
-		$hyperdef =~ s/ /_/g;
 	}
 	elsif($line =~ /^%END/)
 	{
@@ -360,7 +441,20 @@ while($line)
 		{
 			$line = preprocess($line);
 			$line = gen_unicode($line);
-			print OUT "<p>" . $line . "</p>\n";		
+			if($hypertarget ne "")
+			{
+				print OUT "<p id=\"" . $hypertarget . "\">" . $line  ."</p>\n";
+				$hypertarget = "";
+			}
+			elsif($hyperdef ne "")
+			{
+				print OUT "<p id=\"" . $hyperdef . "\">" . $line  . "</p>\n";
+				$hyperdef = "";
+			}
+			else
+			{
+				print OUT "<p>" . $line . "</p>\n";
+			}
 		}
 	}
 	
@@ -368,7 +462,7 @@ while($line)
 }
 
 
-output_pictures();
+#output_pictures(); #display of figures at the end
 
 print OUT $post;
 
@@ -423,13 +517,18 @@ sub gen_unicode()
 	my ($tmp,$flg,$i,$endash_uni,$endash,$flag);
 	$flg = 1;
 
+	$kan_str =~ s/\\eng\{\$/!E!\$/g;
+	$kan_str =~ s/\$}/\$!K!/g;
+	$kan_str =~ s/\\char'220/sx/g;
+	$kan_str =~ s/\\%/%/g;
+	$kan_str =~ s/\\textbf\{(.*?)\}/!E!<span class="bld">!K!\1!E!<\/span>!K!/g;	
 	$kan_str =~ s/\\kern2pt //g;
 	$kan_str =~ s/\\kern2pt//g;
 	$kan_str =~ s/\\char144/sx/g;
 	$kan_str =~ s/\\&/!E!&amp;!K!/g;
 	$kan_str =~ s/\\bf//g;
 	$kan_str =~ s/\{\\yoghsymb\\char178\}/!E!&#x021D;!K!/g;
-	$kan_str =~ s/\\num\{(.*?)\}//g;
+	#$kan_str =~ s/\\num\{(.*?)\}//g;
 	$kan_str =~ s/\\ralign\{(.*?)\}/!E! $ralign_btag !K! $1 !E! $ralign_etag !K! /g;
 	$kan_str =~ s/\\char'263/!E!&#x0CBD;!K!/g;
 	$kan_str =~ s/\\char'365/!E!&#x0CC4;!K!/g;
@@ -443,15 +542,12 @@ sub gen_unicode()
 	$kan_str =~ s/RY/YR/g;
 	$kan_str =~ s/\\cdots/!E!&#x2026;!K!/g;
 
+
 	$flag = 1;
 	while($flag)
 	{
 		#print "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH\n";
-		if($kan_str =~ /\{\\rm (.*?)\}/)
-		{
-			$kan_str =~ s/\{\\rm (.*?)\}/!E!<span class="eng">\1<\/span>!K!/;
-		}
-		elsif($kan_str =~ /\\eng\{(.*?)\}/)
+		if($kan_str =~ /\\eng\{(.*?)\}/)
 		{
 			$kan_str =~ s/\\eng\{(.*?)\}/!E!<span class="eng">\1<\/span>!K!/;
 		}
@@ -459,6 +555,10 @@ sub gen_unicode()
 		{
 			$kan_str =~ s/\\engit\{(.*?)\}/!E!<span class="engit">\1<\/span>!K!/;
 		}
+		#~ elsif($kan_str =~ /\$([^\$]*)\$/)
+		#~ {
+			#~ $kan_str =~ s/\$([^\$]*)\$/!E!\\(\1\\)!K!/;
+		#~ }
 		elsif($kan_str =~ /\\imglink\{(.*)\}\{\\raisebox(.*)\{([A-Z])_Pictures\/(.*)\.jpg\}\}\}/)
 		{
 			$imagecaption = $1;
@@ -468,30 +568,78 @@ sub gen_unicode()
 			#$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
 			$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="..\/Pictures\/main\/\4.jpg" data-lightbox="$lightbox_img_str" data-title="$imagecaption"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
 		}
-		elsif($kan_str =~ /\\ecrlink\{(.*?)\}\{(.*?)\}/)
+		elsif($kan_str =~ /\\hyperlink\{(.*?)\}\{(.*?)\}/)
 		{
 			#$word = $1;
 			#~ print "$2";
+			$insert_italic = 0;
 			$wordlabel = $1;
+			$typeset = $2;
+			if($typeset =~ /\\it/)
+			{
+				$typeset =~ s/\\it//;
+				$insert_italic = 1;
+			}
 			$wordlabel = replace_special($wordlabel);
+			if($typeset =~ /(.*)\?(.*)\?(.*)/)
+			{
+				$typeset =~ s/(.*)\?(.*)\?(.*)/!E!\1!K!\\\2!E!\3/;
+				$typeset = preprocess($typeset);
+				$typeset =~ s/\\bf //;
+			}
 			#~ print "\n\n" . $word . "($id)\n\n";
-			$kan_str =~ s/\\ecrlink\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$wordlabel">\2<\/a><\/span>!K!/;
+			if($insert_italic)
+			{
+				$kan_str =~ s/\\hyperlink\{(.*?)\}\{(.*?)\}/!E!<span class="crossref itl"><a href="#$wordlabel">$typeset<\/a><\/span>!K!/;
+			}
+			else
+			{
+				$kan_str =~ s/\\hyperlink\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$wordlabel">$typeset<\/a><\/span>!K!/;
+			}
 			#~ print $kan_str . "\n";
+			$typeset = "";
+			$insert_italic = 0;
 		}
-		elsif($kan_str =~ /\\ecrlinktarget\{(.*?)\}\{(.*?)\}/)
+		#~ elsif($kan_str =~ /\\hyperlinktarget\{(.*?)\}\{(.*?)\}/)
+		#~ {
+			#~ $target = $1;
+			#~ $target = replace_special($target);
+			#~ $kan_str =~ s/\\hyperlinktarget\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$target">\2<\/a><\/span>!K!/;
+			#print $kan_str . "\n";
+		#~ }
+		elsif($kan_str =~ /\\hyperref\{kandict_([a-z])\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/)
 		{
-			$target = $1;
-			$target = replace_special($target);
-			$kan_str =~ s/\\ecrlinktarget\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$target">\2<\/a><\/span>!K!/;
-			#~ print $kan_str . "\n";
+			$insert_italic = 0;
+			$hyperref_alpha = $1;
+			$hyperref_target = replace_special($2);
+			$typeset = $3;
+			if($typeset =~ /\\it/)
+			{
+				$typeset =~ s/\\it//;
+				$insert_italic = 1;
+			}
+			if($typeset =~ /(.*)\?(.*)\?(.*)/)
+			{
+				$typeset =~ s/(.*)\?(.*)\?(.*)/!E!\1!K!\\\2!E!\3/;
+				$typeset = preprocess($typeset);
+				$typeset =~ s/\\bf //;
+			}
+			$hyperref_file = "../../" . uc($hyperref_alpha) . "/html/" . $hyperref_alpha . "_uni1.html#" . $hyperref_target;
+			if($insert_italic)
+			{
+				$kan_str =~ s/\\hyperref\{kandict_([a-z])\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/!E!<span class="crossref itl"><a href="$hyperref_file">$typeset<\/a><\/span>!K!/g;
+			}
+			else
+			{
+				$kan_str =~ s/\\hyperref\{kandict_([a-z])\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="$hyperref_file">$typeset<\/a><\/span>!K!/g;
+			}
+			$typeset = "";
+			$insert_italic = 0;
 		}
-		elsif($kan_str =~ /\\ecrref\{kandict_([a-z])\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/)
-		{
-			$ecrref_alpha = $1;
-			$ecrref_target = replace_special($2);
-			$ecrref_file = "../../" . uc($ecrref_alpha) . "/html/" . $ecrref_alpha . "_uni.html#" . $ecrref_target;
-			$kan_str =~ s/\\ecrref\{kandict_([a-z])\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="$ecrref_file">\3<\/a><\/span>!K!/g;
-		}
+		#~ elsif($kan_str =~ /\{\\rm (.*?)\}/)
+		#~ {
+			#~ $kan_str =~ s/\{\\rm (.*?)\}/!E!<span class="eng">\1<\/span>!K!/;
+		#~ }		
 		#~ elsif($kan_str =~ /\$(.*?)\$/)
 		#~ {
 			#~ $kan_str =~ s/\$(.*?)\$/!E! \1 !K!/;
@@ -505,6 +653,8 @@ sub gen_unicode()
 
 	$kan_str =~ s/\{//g;
 	$kan_str =~ s/\}//g;
+	$kan_str =~ s/\\bg/{/g;
+	$kan_str =~ s/\\eg/}/g;
 
 	
 	#print $kan_str . "\n";
