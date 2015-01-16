@@ -2,3 +2,9 @@
 *.aux
 *.log
 *.toc
+
+src/*.dvi
+src/*.aux
+src/*.log
+src/*.toc
+
