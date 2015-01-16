@@ -35,3 +35,7 @@
 = \ecrlink{affaire de coeur}{\engit{affaire de coeur}}. -- done
 
 \wordf(ad personam[1]){ad personam} --> to be handled
+
+\wordsidentical ===> done
+
+\imglink{bay_window:fig}{\pdfimage width 0.5cm height 0.5cm {B_Pictures/bay_window.jpg}} ==> pending

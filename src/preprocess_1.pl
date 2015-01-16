@@ -265,7 +265,7 @@ while($line)
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform12 ."</span>\n";
-	}	
+	}
 	elsif($line =~ /\\wordf\[(.*)\(([0-9]+)\)\]\{(.*)\}/)#ex: \wordf[accelerando(1)]{accelerando}
 	{
 		$word_occ = $2;
@@ -278,6 +278,19 @@ while($line)
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform13 ."</span>\n";
+	}	
+	elsif($line =~ /\\wordsidentical\{(.*)\(([0-9]+)\)\}\{(.*)\}/)#ex: \wordsidentical{b.f.(1)}{b.f.}
+	{
+		$word_occ = $2;
+		$wordform14 = $3;
+		$wordlabel = $1 . "(" . $2 . ")"; 
+		$wordlabel = replace_special($wordlabel); 
+		$wordform14 =~ s/\\&/&amp;/;
+		
+		insert_target();
+		insert_seealso($wordlabel);		
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
+			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform14 ."</span>\n";
 	}	
 	elsif($line =~ /\\pron\{(.*)\}/)
 	{
@@ -335,9 +348,29 @@ while($line)
 	{
 		print OUT "</div>\n";	
 	}
+	elsif($line =~ /\\Li\{(.*)\}/)
+	{
+		$list_type = $1;
+		if($list_type eq 'A')
+		{
+			print OUT "<ol class=\"Alpha\">\n";	
+		}
+		elsif($list_type eq 'R')
+		{
+			print OUT "<ol class=\"Roman\">\n";	
+		}
+		else
+		{
+			print OUT "<ol>\n";	
+		}
+	}
 	elsif($line =~ /\\bnum/)
 	{
 		print OUT "<ol>\n";	
+	}
+	elsif($line =~ /\\eLi/)
+	{
+		print OUT "</ol>\n";	
 	}
 	elsif($line =~ /\\enum/)
 	{
@@ -351,7 +384,7 @@ while($line)
 	{
 		print OUT "</ol>\n";	
 	}
-	elsif($line =~ /\\num\{[0-9]+\}(.*)/)
+	elsif($line =~ /\\num\{.*?\}(.*)/)
 	{
 		$numline = preprocess($1);
 		$numline = gen_unicode($numline);
@@ -370,7 +403,7 @@ while($line)
 			print OUT "<li>". $numline  ."</li>\n";
 		}
 	}
-	elsif($line =~ /\\numi\{[0-9]+\}(.*)/)
+	elsif($line =~ /\\numi\{.*?\}(.*)/)
 	{
 		$numline = preprocess($1);
 		$numline = gen_unicode($numline);
@@ -518,7 +551,7 @@ sub gen_unicode()
 	$flg = 1;
 
 	$kan_str =~ s/\\eng\{\$/!E!\$/g;
-	$kan_str =~ s/\$}/\$!K!/g;
+	$kan_str =~ s/\$\}/\$!K!/g;
 	$kan_str =~ s/\\char'220/sx/g;
 	$kan_str =~ s/\\%/%/g;
 	$kan_str =~ s/\\textbf\{(.*?)\}/!E!<span class="bld">!K!\1!E!<\/span>!K!/g;	
@@ -540,7 +573,7 @@ sub gen_unicode()
 	$kan_str =~ s/RyX/yxR/g;
 	$kan_str =~ s/Rq/qR/g;
 	$kan_str =~ s/RY/YR/g;
-	$kan_str =~ s/\\cdots/!E!&#x2026;!K!/g;
+	#~ $kan_str =~ s/\\cdots/!E!&#x2026;!K!/g;
 
 
 	$flag = 1;
@@ -550,6 +583,10 @@ sub gen_unicode()
 		if($kan_str =~ /\\eng\{(.*?)\}/)
 		{
 			$kan_str =~ s/\\eng\{(.*?)\}/!E!<span class="eng">\1<\/span>!K!/;
+		}
+		elsif($kan_str =~ /\\engb\{(.*?)\}/)
+		{
+			$kan_str =~ s/\\engb\{(.*?)\}/!E!<span class="eng bld">\1<\/span>!K!/;
 		}
 		elsif($kan_str =~ /\\engit\{(.*?)\}/)
 		{
@@ -568,6 +605,15 @@ sub gen_unicode()
 			#$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
 			$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="..\/Pictures\/main\/\4.jpg" data-lightbox="$lightbox_img_str" data-title="$imagecaption"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
 		}
+		elsif($kan_str =~ /\\imglink\{(.*)\}\{\\pdfimage(.*)\{([A-Z])_Pictures\/(.*)\.jpg\}\}/)
+		{
+			$imagecaption = $1;
+			$imagecaption =~ s/:fig$//;
+			$imgcount++;
+			$lightbox_img_str = "imgae-" . $imgcount;
+			#$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
+			$kan_str =~ s/\\imglink\{(.*?)\}\{\\pdfimage(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}/!E!<span class="crossref"><a href="..\/Pictures\/main\/\4.jpg" data-lightbox="$lightbox_img_str" data-title="$imagecaption"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
+		}
 		elsif($kan_str =~ /\\hyperlink\{(.*?)\}\{(.*?)\}/)
 		{
 			#$word = $1;
@@ -575,6 +621,7 @@ sub gen_unicode()
 			$insert_italic = 0;
 			$wordlabel = $1;
 			$typeset = $2;
+			$typeset =~ s/\\&/&amp;/g;
 			if($typeset =~ /\\it/)
 			{
 				$typeset =~ s/\\it//;
@@ -624,7 +671,7 @@ sub gen_unicode()
 				$typeset = preprocess($typeset);
 				$typeset =~ s/\\bf //;
 			}
-			$hyperref_file = "../../" . uc($hyperref_alpha) . "/html/" . $hyperref_alpha . "_uni1.html#" . $hyperref_target;
+			$hyperref_file = "../../" . uc($hyperref_alpha) . "/html/" . $hyperref_alpha . "1_uni.html#" . $hyperref_target;
 			if($insert_italic)
 			{
 				$kan_str =~ s/\\hyperref\{kandict_([a-z])\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/!E!<span class="crossref itl"><a href="$hyperref_file">$typeset<\/a><\/span>!K!/g;
@@ -655,6 +702,8 @@ sub gen_unicode()
 	$kan_str =~ s/\}//g;
 	$kan_str =~ s/\\bg/{/g;
 	$kan_str =~ s/\\eg/}/g;
+	$kan_str =~ s/\\tbg/{/g;
+	$kan_str =~ s/\\teg/}/g;
 
 	
 	#print $kan_str . "\n";
@@ -665,7 +714,7 @@ sub gen_unicode()
 	print TMP $kan_str;
 	close(TMP);
 	
-	system("./tmp.o tmp.txt > tmp1.txt");
+	system("./to_unicode5 tmp.txt > tmp1.txt");
 	open(UN, "tmp1.txt") or die "Can't open tmp1.txt\n";	
 	my $uni_str = <UN>;
 	close(UN);

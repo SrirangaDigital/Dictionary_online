@@ -666,6 +666,14 @@ Main components
 	list-style-position: inside;
     list-style-type: lower-alpha !important;
 }
+.word .wBody ol.Alpha{
+	list-style-position: inside;
+    list-style-type: upper-alpha !important;
+}
+.word .wBody ol.Roman{
+	list-style-position: inside;
+    list-style-type: upper-roman !important;
+}
 .word .wBody li{
     padding: 5px 0;
 }
