@@ -2,9 +2,10 @@
 *.aux
 *.log
 *.toc
-src/*.dvi
-src/*.aux
-src/*.log
-src/*.toc
-src/*.txt
+src/tmp1.dvi
+src/tmp1.aux
+src/tmp1.log
+src/tmp1.toc
+src/tmp.txt
+src/tmp1.txt
 
