@@ -392,10 +392,12 @@ while($line)
 		{
 			print OUT "<li id=\"" . $hypertarget . "\">" . $numline  ."</li>\n";
 			$hypertarget = "";
+			$hyperdef = "";
 		}
 		elsif($hyperdef ne "")
 		{
 			print OUT "<li id=\"" . $hyperdef. "\">" . $numline  . "</li>\n";
+			$hypertarget = "";
 			$hyperdef = "";
 		}
 		else
@@ -411,10 +413,12 @@ while($line)
 		{
 			print OUT "<li id=\"" . $hypertarget . "\">" . $numline  . "\n";
 			$hypertarget = "";
+			$hyperdef = "";
 		}
 		elsif($hyperdef ne "")
 		{
 			print OUT "<li id=\"" . $hyperdef. "\">" . $numline  . "\n";
+			$hypertarget = "";
 			$hyperdef = "";
 		}
 		else
@@ -434,10 +438,12 @@ while($line)
 		{
 			print OUT "<li id=\"" . $hypertarget . "\">" . $numline  ."</li>\n";
 			$hypertarget = "";
+			$hyperdef = "";
 		}
 		elsif($hyperdef ne "")
 		{
 			print OUT "<li id=\"" . $hyperdef. "\">" . $numline  . "</li>\n";
+			$hypertarget = "";
 			$hyperdef = "";
 		}
 		else
@@ -478,10 +484,12 @@ while($line)
 			{
 				print OUT "<p id=\"" . $hypertarget . "\">" . $line  ."</p>\n";
 				$hypertarget = "";
+				$hyperdef = "";
 			}
 			elsif($hyperdef ne "")
 			{
 				print OUT "<p id=\"" . $hyperdef . "\">" . $line  . "</p>\n";
+				$hypertarget = "";
 				$hyperdef = "";
 			}
 			else
@@ -558,7 +566,7 @@ sub gen_unicode()
 	$kan_str =~ s/\\kern2pt //g;
 	$kan_str =~ s/\\kern2pt//g;
 	$kan_str =~ s/\\char144/sx/g;
-	$kan_str =~ s/\\&/!E!&amp;!K!/g;
+	#~ $kan_str =~ s/\\&/!E!&amp;!K!/g;
 	$kan_str =~ s/\\bf//g;
 	$kan_str =~ s/\{\\yoghsymb\\char178\}/!E!&#x021D;!K!/g;
 	#$kan_str =~ s/\\num\{(.*?)\}//g;
@@ -590,7 +598,7 @@ sub gen_unicode()
 		}
 		elsif($kan_str =~ /\\engit\{(.*?)\}/)
 		{
-			$kan_str =~ s/\\engit\{(.*?)\}/!E!<span class="engit">\1<\/span>!K!/;
+			$kan_str =~ s/\\engit\{(.*?)\}/!E!<span class="itl">\1<\/span>!K!/;
 		}
 		#~ elsif($kan_str =~ /\$([^\$]*)\$/)
 		#~ {
@@ -644,6 +652,7 @@ sub gen_unicode()
 				$kan_str =~ s/\\hyperlink\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$wordlabel">$typeset<\/a><\/span>!K!/;
 			}
 			#~ print $kan_str . "\n";
+			
 			$typeset = "";
 			$insert_italic = 0;
 		}
@@ -725,6 +734,7 @@ sub gen_unicode()
 	
 	my($decval,$val,$p);
 	$uni_str =~ s/<br>//g;
+	$uni_str =~ s/\\&/&amp;/g;
 	$uni_str =~ s/<\/br>//g;
 	$uni_str =~ s/---/&#x2014;/g;
 	$uni_str =~ s/--/&#x2013;/g;
@@ -1489,10 +1499,12 @@ sub insert_target()
 	{
 		print OUT "<div id=\"". $hypertarget ."\"></div>\n";
 		$hypertarget = "";
+		$hyperdef = "";
 	}
 	if($hyperdef ne "")
 	{
 		print OUT "<div id=\"". $hyperdef ."\"></div>\n";
+		$hypertarget = "";
 		$hyperdef = "";
 	}
 }
@@ -1598,8 +1610,9 @@ sub replace_special()
 	$mytarget =~ s/\(/_/g;
 	$mytarget =~ s/\)/_/g;
 	$mytarget =~ s/ /_/g;
-	$mytarget =~ s/'//g;
+	$mytarget =~ s/'/_/g;
 	$mytarget =~ s/,//g;
+	$mytarget =~ s/\\&/and/g;
 	
 	return ($mytarget);
 }
