@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
-$file = "C/texfiles/letter_c1.tex";
-$outfile = "C/texfiles/letter_c.tex";
+$file = "D/texfiles/letter_d1.tex";
+$outfile = "D/texfiles/letter_d.tex";
 
 open(IN, "$file") or die "can't open $file";
 open(OUT, ">$outfile") or die "can't open $outfile";
@@ -25,6 +25,10 @@ while($line)
 		replace_all($mng);
 		$mng = "";
 		$mflag = 0;
+	}
+	elsif($line =~ /^\\addanothertarget/)
+	{
+		print OUT $line . "\n";
 	}
 	elsif($line =~ /^\\word/)
 	{

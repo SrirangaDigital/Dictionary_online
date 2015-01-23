@@ -175,7 +175,7 @@ while($line)
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";			
 			print OUT "\t<span class=\"engWord clr1\">".  $wordform5 ."</span>\n";		
 	}
-	elsif($line =~ /\\wordspecial\{(.*)\}\{([0-9]+)\}\{([0-9]+)\}\{(.*)\}/)#ex: \wordspecial{anti-}{1}{1}{\hyperlink{anti(1)}{\quad\textcolor{superscript}{$^2$}\eng{anti}}\hyperlink{anti(2)}{\quad\textcolor{superscript}{$^3$}\eng{anti-}}}
+	elsif($line =~ /\\wordspecial\{(.*)\}\{([0-9]+'?)\}\{([0-9]+'?)\}\{(.*)\}/)#ex: \wordspecial{anti-}{1}{1}{\hyperlink{anti(1)}{\quad\textcolor{superscript}{$^2$}\eng{anti}}\hyperlink{anti(2)}{\quad\textcolor{superscript}{$^3$}\eng{anti-}}}
 	{
 		$wordform6 = $1;
 		$wordlabel = $wordform6;
@@ -206,6 +206,8 @@ while($line)
 		$wordform8 = $2;
 		$wordlabel = replace_special($wordlabel);
 		$wordform8 =~ s/\\&/&amp;/;
+		$wordform8 =~ s/\\bg/{/;
+		$wordform8 =~ s/\\eg/}/;
 				
 		insert_target();
 		insert_seealso($wordlabel);
@@ -292,12 +294,28 @@ while($line)
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
 			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform14 ."</span>\n";
 	}	
+	elsif($line =~ /\\wordwsas\{(.*?)\(([0-9]+)\)\}\{(.*)\}\{(.*)\}/)#ex: \wordwsas{co-ordinate(3)}{\textcolor{superscript}{$^3$}co-ordinate, \textcolor{superscript}{$^{*3}$}coordinate}{{\rm\footnotesize\engit{\footnotesize See alos \hyperlink{co-ordinate(1)}{\textcolor{superscript}{$^{1}$}co-ordinate, \textcolor{superscript}{$^{*1}$}coordinate}\quad \hyperlink{co-ordinate(2)}{\textcolor{superscript}{$^{2}$}co-ordinate, \textcolor{superscript}{$^{*2}$}coordinate}}}}
+	{
+		$wordform15 = $1;
+		$word_occ = $2;
+		$wordlabel = $1 . "(" . $2 . ")"; 
+		$wordlabel = replace_special($wordlabel);
+		$wordform15 =~ s/\\&/&amp;/;
+				
+		#~ print $wordform15 . "\n";
+		#~ exit(0);		
+		
+		insert_target();
+		insert_seealso($wordlabel);
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";	
+			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform15 ."</span>\n";
+	}	
 	elsif($line =~ /\\pron\{(.*)\}/)
 	{
 		$pron = $1;
 		if($pron ne "?")
 		{
-			if($pron =~ /Z|Yx/)
+			if($pron =~ /Z|Yx|\(V\)|\(M\)|\(H\)/)
 			{
 				if(!(-e "$letter/pronunciation/". $label . $wordid . ".png"))
 				{
@@ -574,6 +592,7 @@ sub gen_unicode()
 	$kan_str =~ s/\\char'263/!E!&#x0CBD;!K!/g;
 	$kan_str =~ s/\\char'365/!E!&#x0CC4;!K!/g;
 	$kan_str =~ s/\\char'273/!E!&#x0CB1;!K!/g;
+	$kan_str =~ s/\\copyright/!E!&#x00A9;!K!/g;
 	$kan_str =~ s/\\s /!E!&#x0CBD;!K!/g;
 	$kan_str =~ s/RV/VR/g;
 	$kan_str =~ s/qq/q/g;
@@ -607,20 +626,26 @@ sub gen_unicode()
 		elsif($kan_str =~ /\\imglink\{(.*)\}\{\\raisebox(.*)\{([A-Z])_Pictures\/(.*)\.jpg\}\}\}/)
 		{
 			$imagecaption = $1;
+			$imagename = $4;
+			$imagename =~ s/ /_/g;
+			$imagename =~ s/'//g;
 			$imagecaption =~ s/:fig$//;
 			$imgcount++;
 			$lightbox_img_str = "imgae-" . $imgcount;
 			#$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
-			$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="..\/Pictures\/main\/\4.jpg" data-lightbox="$lightbox_img_str" data-title="$imagecaption"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
+			$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="..\/Pictures\/main\/$imagename.jpg" data-lightbox="$lightbox_img_str" data-title="$imagecaption"><img src="..\/Pictures\/thumbs\/$imagename.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
 		}
 		elsif($kan_str =~ /\\imglink\{(.*)\}\{\\pdfimage(.*)\{([A-Z])_Pictures\/(.*)\.jpg\}\}/)
 		{
 			$imagecaption = $1;
+			$imagename = $4;
+			$imagename =~ s/ /_/g;
+			$imagename =~ s/'//g;			
 			$imagecaption =~ s/:fig$//;
 			$imgcount++;
 			$lightbox_img_str = "imgae-" . $imgcount;
 			#$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
-			$kan_str =~ s/\\imglink\{(.*?)\}\{\\pdfimage(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}/!E!<span class="crossref"><a href="..\/Pictures\/main\/\4.jpg" data-lightbox="$lightbox_img_str" data-title="$imagecaption"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
+			$kan_str =~ s/\\imglink\{(.*?)\}\{\\pdfimage(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}/!E!<span class="crossref"><a href="..\/Pictures\/main\/$imagename.jpg" data-lightbox="$lightbox_img_str" data-title="$imagecaption"><img src="..\/Pictures\/thumbs\/$imagename.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
 		}
 		elsif($kan_str =~ /\\hyperlink\{(.*?)\}\{(.*?)\}/)
 		{
