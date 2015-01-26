@@ -753,3 +753,10 @@ div.seealso{
 	vertical-align: middle;
 }
 
+.alpha_link {
+	font-family: serif;
+	font-size: 2em;
+	padding-right: 2em;
+	color: #3372df;
+}
+
