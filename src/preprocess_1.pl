@@ -583,6 +583,11 @@ sub gen_unicode()
 	$kan_str =~ s/\\textbf\{(.*?)\}/!E!<span class="bld">!K!\1!E!<\/span>!K!/g;	
 	$kan_str =~ s/\\kern2pt //g;
 	$kan_str =~ s/\\kern2pt//g;
+	$kan_str =~ s/\\char36/!E!\$\\\$\$!K!/g;
+	$kan_str =~ s/\\ae/!E!&#xE6;!K!/g;
+	$kan_str =~ s/\\char143\\ /Px/g;
+	$kan_str =~ s/\\char143/Px/g;
+	$kan_str =~ s/\\char144\\ /sx/g;
 	$kan_str =~ s/\\char144/sx/g;
 	#~ $kan_str =~ s/\\&/!E!&amp;!K!/g;
 	$kan_str =~ s/\\bf//g;

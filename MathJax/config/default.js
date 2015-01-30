@@ -325,7 +325,7 @@ MathJax.Hub.Config({
     //  math mode.  If you uncomment the ['$','$'] line above, you should change
     //  this to true so that you can insert plain dollar signs into your documents
     //
-    processEscapes: false,
+    processEscapes: true,
 
     //
     //  Controls whether tex2jax processes LaTeX environments outside of math
