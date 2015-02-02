@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
-$file = "E/texfiles/letter_e1.tex";
-$outfile = "E/texfiles/letter_e.tex";
+$file = "F/texfiles/letter_f1.tex";
+$outfile = "F/texfiles/letter_f.tex";
 
 open(IN, "$file") or die "can't open $file";
 open(OUT, ">$outfile") or die "can't open $outfile";
