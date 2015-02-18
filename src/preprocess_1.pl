@@ -18,7 +18,7 @@ $letter = uc($alpha);
 $file =  $letter . "/texfiles/letter_". lc($letter) .".tex";
 $output = $letter . "/html/". lc($letter) ."1_uni.html";
 $pictfile = $letter . "/texfiles/". lc($letter) ."_figs_list.tex";
-$indexfile = $letter . "/texfiles/indexofletter". lc($letter) .".tex";
+$indexfile = $letter . "/texfiles/indexofletter". lc($letter) . ".tex";
 $hashfile = $letter . "/texfiles/dictionarywords.tex";
 
 
@@ -486,6 +486,7 @@ while($line)
 	}
 	elsif($line =~ /^%END/)
 	{
+		print OUT $post;
 		exit(1);
 	}
 	elsif($line =~ /^%|\\noindent/)
@@ -584,11 +585,13 @@ sub gen_unicode()
 	$kan_str =~ s/\\kern2pt //g;
 	$kan_str =~ s/\\kern2pt//g;
 	$kan_str =~ s/\\char36/!E!\$\\\$\$!K!/g;
-	$kan_str =~ s/\\ae/!E!&#xE6;!K!/g;
+	$kan_str =~ s/\\ae/!E!&#x00E6;!K!/g;
 	$kan_str =~ s/\\char143\\ /Px/g;
 	$kan_str =~ s/\\char143/Px/g;
 	$kan_str =~ s/\\char144\\ /sx/g;
 	$kan_str =~ s/\\char144/sx/g;
+	$kan_str =~ s/\\char168\\char177/yiV/g;
+	$kan_str =~ s/\\pounds/!E!&#x00A3;!K!/g;
 	#~ $kan_str =~ s/\\&/!E!&amp;!K!/g;
 	$kan_str =~ s/\\bf//g;
 	$kan_str =~ s/\{\\yoghsymb\\char178\}/!E!&#x021D;!K!/g;
