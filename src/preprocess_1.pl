@@ -315,7 +315,7 @@ while($line)
 		$pron = $1;
 		if($pron ne "?")
 		{
-			if($pron =~ /Z|Yx|\(V\)|\(M\)|\(H\)/)
+			if($pron =~ /Z|Yx|\(V\)|\(M\)|\(H\)|ph/)
 			{
 				if(!(-e "$letter/pronunciation/". $label . $wordid . ".png"))
 				{
