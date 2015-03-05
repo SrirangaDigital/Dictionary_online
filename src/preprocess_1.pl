@@ -713,7 +713,7 @@ sub gen_unicode()
 				$typeset = preprocess($typeset);
 				$typeset =~ s/\\bf //;
 			}
-			$hyperref_file = "../../" . uc($hyperref_alpha) . "/html/" . $hyperref_alpha . "1_uni.html#" . $hyperref_target;
+			$hyperref_file = "/Dictionary_online/src/" . uc($hyperref_alpha) . "/html/" . $hyperref_alpha . "1_uni.html#" . $hyperref_target;
 			if($insert_italic)
 			{
 				$kan_str =~ s/\\hyperref\{kandict_([a-z])\.pdf\}\{[A-Z]\}\{(.*?)\}\{(.*?)\}/!E!<span class="crossref itl"><a href="$hyperref_file">$typeset<\/a><\/span>!K!/g;
@@ -1047,13 +1047,13 @@ $line =~ s/\\gu /\{\\bf guNavAcaka\}/g;
 $line =~ s/\\gu\\ /\{\\bf guNavAcaka\} /g;
 $line =~ s/\\gu/\{\\bf guNavAcaka\}/g;
 
-$line =~ s/\\G /\\eng\{German\}/g;
-$line =~ s/\\G\\ /\\eng\{German\} /g;
-$line =~ s/\\G/\\eng\{German\}/g;
-
 $line =~ s/\\Gk /\\eng\{Greek\}/g;
 $line =~ s/\\Gk\\ /\\eng\{Greek\} /g;
 $line =~ s/\\Gk/\\eng\{Greek\}/g;
+
+$line =~ s/\\G /\\eng\{German\}/g;
+$line =~ s/\\G\\ /\\eng\{German\} /g;
+$line =~ s/\\G/\\eng\{German\}/g;
 
 $line =~ s/\\caci /calanacitarx/g;
 $line =~ s/\\caci\\ /calanacitarx /g;
