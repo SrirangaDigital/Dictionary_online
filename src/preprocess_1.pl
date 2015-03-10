@@ -310,9 +310,26 @@ while($line)
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";	
 			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform15 ."</span>\n";
 	}	
+	elsif($line =~ /\\general\{(.*)\}\{(.*)\}/)#ex: \general{poundsymbol}{\pounds}
+	{
+		$wordlabel = $1; 
+		$wordform16 = $2;
+		$wordlabel = replace_special($wordlabel);
+		$wordform16 =~ s/\\&/&amp;/;
+		$wordform16 =~ s/\\pounds/&#x00A3;/g;
+				
+		#~ print $wordform16 . "\n";
+		#~ exit(0);		
+		
+		insert_target();
+		insert_seealso($wordlabel);
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";	
+			print OUT "\t<span class=\"engWord clr1\">". $wordform16 ."</span>\n";
+	}	
 	elsif($line =~ /\\pron\{(.*)\}/)
 	{
 		$pron = $1;
+		$pron = preprocess($1);
 		if($pron ne "?")
 		{
 			if($pron =~ /Z|Yx|\(V\)|\(M\)|\(H\)|ph/)
@@ -591,7 +608,7 @@ sub gen_unicode()
 	$kan_str =~ s/\\char144\\ /sx/g;
 	$kan_str =~ s/\\char144/sx/g;
 	$kan_str =~ s/\\char168\\char177/yiV/g;
-	$kan_str =~ s/\\pounds/!E!&#x00A3;!K!/g;
+	$kan_str =~ s/\\pounds/!E!&#163;!K!/g;
 	#~ $kan_str =~ s/\\&/!E!&amp;!K!/g;
 	$kan_str =~ s/\\bf//g;
 	$kan_str =~ s/\{\\yoghsymb\\char178\}/!E!&#x021D;!K!/g;

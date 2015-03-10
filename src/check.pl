@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-open(IN,"G/texfiles/letter_g.tex") or die("G/texfiles/letter_g.tex");
+open(IN,"L/texfiles/letter_l.tex") or die("L/texfiles/letter_l.tex");
 
 $line = <IN>;
 $count = 0;
@@ -43,7 +43,7 @@ while($line)
 	#~ }
 	elsif($line =~ /\\eentry/)
 	{
-		if($count > 1)
+		if($count == 0)
 		{
 			print $lno . "\n";
 		}
