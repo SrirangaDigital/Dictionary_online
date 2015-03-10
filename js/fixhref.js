@@ -11,15 +11,13 @@ var headerHeight = $("header").height();
 
 $('a').on('click',function (e) {
         e.preventDefault();
-	
+
 		var link = $(this).attr('href');
         $link = $(link);
-        
-        //alert(link);
-        
+       
         $('html, body').stop().animate({
            'scrollTop': $link.offset().top - headerHeight
-        }, 1200, 'swing', function () {
+        }, 900, 'swing', function () {
             window.location.hash = link;
         });
 	});
