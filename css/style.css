@@ -757,7 +757,17 @@ div.seealso{
 .alpha_link {
 	font-family: serif;
 	font-size: 2em;
-	padding-right: 2em;
+	padding-right: 1.5em;
 	color: #3372df;
 }
 
+.alpha_link1 {
+	font-family: serif;
+	font-size: 2em;
+	padding-right: 1.5em;
+	color: #CCCCCC;
+}
+
+.alpha_list{
+	margin-top: 3em;
+}
