@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-open(IN,"L/texfiles/letter_l.tex") or die("L/texfiles/letter_l.tex");
+open(IN,"R/texfiles/letter_r.tex") or die("S/texfiles/letter_s.tex");
 
 $line = <IN>;
 $count = 0;

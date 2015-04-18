@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+
 $alpha = $ARGV[0];
 
 #print $alpha . "\n";
@@ -120,6 +121,7 @@ while($line)
 		$wordform1 = $1;
 		$wordlabel = replace_special($wordform1); 
 		$wordform1 =~ s/\\&/&amp;/;
+		$wordform1 = replace_accents($wordform1);
 				
 		insert_target();
 		insert_seealso($wordlabel);
@@ -133,6 +135,7 @@ while($line)
 		$wordlabel = $1 . "(" . $2 . ")"; 
 		$wordlabel = replace_special($wordlabel); 
 		$wordform2 =~ s/\\&/&amp;/;
+		$wordform2 = replace_accents($wordform2);
 		
 		insert_target();
 		insert_seealso($wordlabel);		
@@ -145,6 +148,7 @@ while($line)
 		$wordform3 = $2;
 		$wordlabel = replace_special($wordlabel);
 		$wordform3 =~ s/\\&/&amp;/;
+		$wordform3 = replace_accents($wordform3);
 		
 		insert_target();
 		insert_seealso($wordlabel);		
@@ -157,6 +161,7 @@ while($line)
 		$wordform4 = $2;
 		$wordlabel = replace_special($wordlabel);
 		$wordform4 =~ s/\\&/&amp;/;
+		$wordform4 = replace_accents($wordform4);
 		
 		insert_target();
 		insert_seealso($wordlabel);		
@@ -169,6 +174,7 @@ while($line)
 		$wordform5 = $2;
 		$wordlabel = replace_special($wordlabel);
 		$wordform5 =~ s/\\&/&amp;/;
+		$wordform5 = replace_accents($wordform5);		
 			
 		insert_target();
 		insert_seealso($wordlabel);
@@ -183,6 +189,7 @@ while($line)
 		$wordlabel = $wordlabel . "(" . $word_occ . ")";
 		$wordlabel = replace_special($wordlabel);
 		$wordform6 =~ s/\\&/&amp;/;
+		$wordform6 = replace_accents($wordform6);		
 		
 		insert_target();
 		insert_seealso($wordlabel);
@@ -194,6 +201,7 @@ while($line)
 		$wordform7 = $1;
 		$wordlabel = replace_special($wordform7);
 		$wordform7 =~ s/\\&/&amp;/;
+		$wordform7 = replace_accents($wordform7);		
 		
 		insert_target();
 		insert_seealso($wordlabel);
@@ -208,6 +216,7 @@ while($line)
 		$wordform8 =~ s/\\&/&amp;/;
 		$wordform8 =~ s/\\bg/{/;
 		$wordform8 =~ s/\\eg/}/;
+		$wordform8 = replace_accents($wordform8);		
 				
 		insert_target();
 		insert_seealso($wordlabel);
@@ -221,6 +230,7 @@ while($line)
 		$wordlabel = $1 . "(" . $2 . ")"; 
 		$wordlabel = replace_special($wordlabel); 
 		$wordform9 =~ s/\\&/&amp;/;
+		$wordform9 = replace_accents($wordform9);		
 		
 		insert_target();
 		insert_seealso($wordlabel);		
@@ -234,6 +244,7 @@ while($line)
 		$wordlabel = $1 . "(" . $2 . ")"; 
 		$wordlabel = replace_special($wordlabel); 
 		$wordform10 =~ s/\\&/&amp;/;
+		$wordform10 = replace_accents($wordform10);		
 		
 		insert_target();
 		insert_seealso($wordlabel);		
@@ -249,6 +260,7 @@ while($line)
 		$wordlabel =~ s/}//;
 		$wordlabel = replace_special($wordlabel); 
 		$wordform11 =~ s/\\&/&amp;/;
+		$wordform11 = replace_accents($wordform11);		
 		
 		insert_target();
 		insert_seealso($wordlabel);		
@@ -262,11 +274,12 @@ while($line)
 		$wordlabel = $1 . "(" . $2 . ")"; 
 		$wordlabel = replace_special($wordlabel); 
 		$wordform12 =~ s/\\&/&amp;/;
+		$wordform12 = replace_accents($wordform12);		
 		
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
-			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform12 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1 itl\">". '${}^{'. $word_occ . '}$' . $wordform12 ."</span>\n";
 	}
 	elsif($line =~ /\\wordf\[(.*)\(([0-9]+)\)\]\{(.*)\}/)#ex: \wordf[accelerando(1)]{accelerando}
 	{
@@ -275,11 +288,12 @@ while($line)
 		$wordlabel = $1 . "(" . $2 . ")"; 
 		$wordlabel = replace_special($wordlabel); 
 		$wordform13 =~ s/\\&/&amp;/;
+		$wordform13 = replace_accents($wordform13);		
 		
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
-			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform13 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1 itl\">". '${}^{'. $word_occ . '}$' . $wordform13 ."</span>\n";
 	}	
 	elsif($line =~ /\\wordsidentical\{(.*)\(([0-9]+)\)\}\{(.*)\}/)#ex: \wordsidentical{b.f.(1)}{b.f.}
 	{
@@ -288,6 +302,7 @@ while($line)
 		$wordlabel = $1 . "(" . $2 . ")"; 
 		$wordlabel = replace_special($wordlabel); 
 		$wordform14 =~ s/\\&/&amp;/;
+		$wordform14 = replace_accents($wordform14);		
 		
 		insert_target();
 		insert_seealso($wordlabel);		
@@ -301,6 +316,7 @@ while($line)
 		$wordlabel = $1 . "(" . $2 . ")"; 
 		$wordlabel = replace_special($wordlabel);
 		$wordform15 =~ s/\\&/&amp;/;
+		$wordform15 = replace_accents($wordform15);		
 				
 		#~ print $wordform15 . "\n";
 		#~ exit(0);		
@@ -309,7 +325,7 @@ while($line)
 		insert_seealso($wordlabel);
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";	
 			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform15 ."</span>\n";
-	}	
+	}
 	elsif($line =~ /\\general\{(.*)\}\{(.*)\}/)#ex: \general{poundsymbol}{\pounds}
 	{
 		$wordlabel = $1; 
@@ -317,6 +333,7 @@ while($line)
 		$wordlabel = replace_special($wordlabel);
 		$wordform16 =~ s/\\&/&amp;/;
 		$wordform16 =~ s/\\pounds/&#x00A3;/g;
+		$wordform16 = replace_accents($wordform16);		
 				
 		#~ print $wordform16 . "\n";
 		#~ exit(0);		
@@ -326,13 +343,28 @@ while($line)
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";	
 			print OUT "\t<span class=\"engWord clr1\">". $wordform16 ."</span>\n";
 	}	
+	elsif($line =~ /\\wordwosasf\{(.*)\}\{(.*)\}/)#ex: \wordwosasf{maitre d'hotel}{maitre d'hotel}
+	{
+		$wordlabel = $1;
+		$wordform17 = $2;
+		$wordlabel = replace_special($wordlabel);
+		$wordform17 =~ s/\\&/&amp;/;
+		$wordform17 =~ s/\\bg/{/;
+		$wordform17 =~ s/\\eg/}/;
+		$wordform17 = replace_accents($wordform17);		
+				
+		insert_target();
+		insert_seealso($wordlabel);
+		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";	
+			print OUT "\t<span class=\"engWord clr1\">".  $wordform17 ."</span>\n";
+	}	
 	elsif($line =~ /\\pron\{(.*)\}/)
 	{
 		$pron = $1;
 		$pron = preprocess($1);
 		if($pron ne "?")
 		{
-			if($pron =~ /Z|Yx|\(V\)|\(M\)|\(H\)|ph/)
+			if($pron =~ /Z|z|Yx|\(V\)|\(M\)|\(H\)|ph/)
 			{
 				if(!(-e "$letter/pronunciation/". $label . $wordid . ".png"))
 				{
@@ -594,6 +626,10 @@ sub gen_unicode()
 	my ($tmp,$flg,$i,$endash_uni,$endash,$flag);
 	$flg = 1;
 
+	$kan_str =~ s/\\Pisymbol\{psy\}\{226\}/!E!&#xAE;!K!/g;
+	$kan_str =~ s/\\eng\{\$\\mathparagraph\$\}/!E!&#xb6;!K!/g;
+	$kan_str =~ s/\\eng\{\$\\bigcircP\$\}/!E!&#x24C5;!K!/g;
+	$kan_str =~ s/\\eng\{\$\\varodot\$\}/!E!&#x2299;!K!/g;
 	$kan_str =~ s/\\eng\{\$/!E!\$/g;
 	$kan_str =~ s/\$\}/\$!K!/g;
 	$kan_str =~ s/\\char'220/sx/g;
@@ -607,6 +643,11 @@ sub gen_unicode()
 	$kan_str =~ s/\\char143/Px/g;
 	$kan_str =~ s/\\char144\\ /sx/g;
 	$kan_str =~ s/\\char144/sx/g;
+	$kan_str =~ s/xYx/xyX/g;
+	$kan_str =~ s/Yx/yx/g;
+	$kan_str =~ s/eZ\\char'261/oZ/g;
+	$kan_str =~ s/ez\\char'261V/oVz/g;
+	$kan_str =~ s/sz\\char'301/sAz/g;
 	$kan_str =~ s/\\char168\\char177/yiV/g;
 	$kan_str =~ s/\\pounds/!E!&#163;!K!/g;
 	#~ $kan_str =~ s/\\&/!E!&amp;!K!/g;
@@ -793,7 +834,8 @@ sub gen_unicode()
 	$uni_str =~ s/''/&#x201D;/g;
 	$uni_str =~ s/`/&#x2018;/g;
 	$uni_str =~ s/'/&#x2019;/g;
-	$uni_str =~ s/&nbsp;/&#xa0;/g;
+	$uni_str =~ s/&nbsp;/&#xA0;/g;
+	$uni_str =~ s/\\\^e/&#xEA;/g;
 	#$uni_str =~ s/(&#x0CCD;)(&#x200C;)(&#x0C97;)(&#x0CCD;)/\1\3\4/;
 		
 	while($flg)
@@ -1256,9 +1298,10 @@ $line =~ s/\\Per /\\eng\{Persian\}/g;
 $line =~ s/\\Per\\ /\\eng\{Persian\} /g;
 $line =~ s/\\Per/\\eng\{Persian\}/g;
 
+$line =~ s/^\\P$/\\eng\{Proprietary name\}/g;
 $line =~ s/\\P /\\eng\{Proprietary name\}/g;
 $line =~ s/\\P\\ /\\eng\{Proprietary name\} /g;
-$line =~ s/\\P/\\eng\{Proprietary name\}/g;
+$line =~ s/\b\\P\b/\\eng\{Proprietary name\}/g;
 
 $line =~ s/\\bava /bahuvacana/g;
 $line =~ s/\\bava\\ /bahuvacana /g;
@@ -1536,6 +1579,10 @@ $line =~ s/\\hiV /hiVnAthaRka parxyoVga/g;
 $line =~ s/\\hiV\\ /hiVnAthaRka parxyoVga /g;
 $line =~ s/\\hiV/hiVnAthaRka parxyoVga/g;
 
+$line =~ s/\\L /\\eng\{Latin\}/g;
+$line =~ s/\\L\\ /\\eng\{Latin\} /g;
+$line =~ s/\\L/\\eng\{Latin\}/g;
+
 $line =~ s/\\Latin /\\eng\{Latin\}/g;
 $line =~ s/\\Latin\\ /\\eng\{Latin\} /g;
 $line =~ s/\\Latin/\\eng\{Latin\}/g;
@@ -1663,6 +1710,8 @@ sub replace_special()
 	$mytarget =~ s/'/_/g;
 	$mytarget =~ s/,//g;
 	$mytarget =~ s/\\&/and/g;
+#	$mytarget =~ s/-/_/g;
+	$mytarget =~ s/\./_/g;
 	
 	return ($mytarget);
 }
@@ -1675,4 +1724,13 @@ sub insert_seealso()
 	{
 		print OUT "\t<div class=\"seealso\"><span style=\"font-style: italic;font-size:0.7em;\">See also</span> ". $mainhash{$seealso_id} . "</div>";
 	}
+}
+
+sub replace_accents()
+{
+	my($wordForm) = @_;
+	
+	$wordForm =~ s/\\\^e/ê/g;
+	
+	return ($wordForm);
 }
