@@ -140,7 +140,7 @@ while($line)
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
-			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform2 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1\">". '<sup>'. $word_occ . '</sup>' . $wordform2 ."</span>\n";
 	}
 	elsif($line =~ /\\wordwithhyphen\{(.*)\}\{(.*)\}/)#ex: \wordwithhyphen{hyp-a}{-a}
 	{
@@ -194,7 +194,7 @@ while($line)
 		insert_target();
 		insert_seealso($wordlabel);
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
-			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform6 ."</span>\n";		
+			print OUT "\t<span class=\"engWord clr1\">". '<sup>'. $word_occ . '</sup>' . $wordform6 ."</span>\n";		
 	}
 	elsif($line =~ /\\wordf\{(.*)\}/)#ex: \wordf{a outrance}
 	{
@@ -235,7 +235,7 @@ while($line)
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
-			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform9 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1\">". '<sup>'. $word_occ . '</sup>' . $wordform9 ."</span>\n";
 	}
 	elsif($line =~ /\\fiveargs(.*)\(([0-9]+)\)\{(.*)\}/)#ex: \fiveargs across the board(1){across the board}
 	{
@@ -249,7 +249,7 @@ while($line)
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
-			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform10 ."</span>\n";		
+			print OUT "\t<span class=\"engWord clr1\">". '<sup>'. $word_occ . '</sup>' . $wordform10 ."</span>\n";		
 	}	
 	elsif($line =~ /\\fiveargsf(.*)\(([0-9]+)\)\{(.*)\}/)#ex: \fiveargsf across the board(1){across the board}
 	{
@@ -265,7 +265,7 @@ while($line)
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
-			print OUT "\t<span class=\"engWord clr1 itl\">". '${}^{'. $word_occ . '}$' . $wordform11 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1 itl\">". '<sup>'. $word_occ . '</sup>' . $wordform11 ."</span>\n";
 	}
 	elsif($line =~ /\\wordf\((.*)\[([0-9]+)\]\)\{(.*)\}/)#ex: \wordf(ad personam[1]){ad personam} 
 	{
@@ -279,7 +279,7 @@ while($line)
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
-			print OUT "\t<span class=\"engWord clr1 itl\">". '${}^{'. $word_occ . '}$' . $wordform12 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1 itl\">". '<sup>'. $word_occ . '</sup>' . $wordform12 ."</span>\n";
 	}
 	elsif($line =~ /\\wordf\[(.*)\(([0-9]+)\)\]\{(.*)\}/)#ex: \wordf[accelerando(1)]{accelerando}
 	{
@@ -293,7 +293,7 @@ while($line)
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
-			print OUT "\t<span class=\"engWord clr1 itl\">". '${}^{'. $word_occ . '}$' . $wordform13 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1 itl\">". '<sup>'. $word_occ . '</sup>' . $wordform13 ."</span>\n";
 	}	
 	elsif($line =~ /\\wordsidentical\{(.*)\(([0-9]+)\)\}\{(.*)\}/)#ex: \wordsidentical{b.f.(1)}{b.f.}
 	{
@@ -307,7 +307,7 @@ while($line)
 		insert_target();
 		insert_seealso($wordlabel);		
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";
-			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform14 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1\">". '<sup>'. $word_occ . '</sup>' . $wordform14 ."</span>\n";
 	}	
 	elsif($line =~ /\\wordwsas\{(.*?)\(([0-9]+)\)\}\{(.*)\}\{(.*)\}/)#ex: \wordwsas{co-ordinate(3)}{\textcolor{superscript}{$^3$}co-ordinate, \textcolor{superscript}{$^{*3}$}coordinate}{{\rm\footnotesize\engit{\footnotesize See alos \hyperlink{co-ordinate(1)}{\textcolor{superscript}{$^{1}$}co-ordinate, \textcolor{superscript}{$^{*1}$}coordinate}\quad \hyperlink{co-ordinate(2)}{\textcolor{superscript}{$^{2}$}co-ordinate, \textcolor{superscript}{$^{*2}$}coordinate}}}}
 	{
@@ -324,7 +324,7 @@ while($line)
 		insert_target();
 		insert_seealso($wordlabel);
 		print OUT "<div class=\"whead\" id=\"". $wordlabel . "\">\n";	
-			print OUT "\t<span class=\"engWord clr1\">". '${}^{'. $word_occ . '}$' . $wordform15 ."</span>\n";
+			print OUT "\t<span class=\"engWord clr1\">". '<sup>'. $word_occ . '</sup>' . $wordform15 ."</span>\n";
 	}
 	elsif($line =~ /\\general\{(.*)\}\{(.*)\}/)#ex: \general{poundsymbol}{\pounds}
 	{
@@ -1687,7 +1687,7 @@ sub create_hash()
 			if($m != $l)
 			{
 				($nextid,$nextword) = split(/;/,$list[$m]);
-				$nextword =~ s/(.*)\(([0-9]+)\)/\${}^\2\$\1/;
+				$nextword =~ s/(.*)\(([0-9]+)\)/<sup>\2<\/sup>\1/;
 				$nextword =~ s/hyp-/-/;
 				$nextid = replace_special($nextid);
 				$mainhash{$hashid} = $mainhash{$hashid} . "<span class=\"seealsoword\"><a href=\"#". $nextid . "\">". $nextword ."</a></span>&nbsp;&nbsp;";

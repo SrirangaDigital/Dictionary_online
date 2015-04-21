@@ -714,6 +714,11 @@ Main components
 	font-style: italic;	
 }
 
+sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
 p.bracket_grp{
 	font-size: 0.8em;
     margin: 0px;
