@@ -39,3 +39,8 @@
 \wordsidentical ===> done
 
 \imglink{bay_window:fig}{\pdfimage width 0.5cm height 0.5cm {B_Pictures/bay_window.jpg}} ==> pending
+
+
+Corrections
+
+citangent: In figure it should be AC/BC but now it is AB/BC
