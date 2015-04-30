@@ -73,8 +73,8 @@ $preamble = "<!doctype html>
 
 		<nav class=\"cd-main-nav\">
 			<ul>
-				<li><a href=\"#0\">Home</a></li>
-				<li><a href=\"#0\">Dictionary</a></li>
+				<li><a href=\"../../../index.html\">Home</a></li>
+				<li><a href=\"../../../index.html\">Dictionary</a></li>
 			</ul>
 		</nav> <!-- cd-main-nav -->
 	</header>
@@ -175,6 +175,7 @@ while($line)
 		$wordlabel = replace_special($wordlabel);
 		$wordform5 =~ s/\\&/&amp;/;
 		$wordform5 = replace_accents($wordform5);		
+		$wordlabel =~ s/-/_/g;
 			
 		insert_target();
 		insert_seealso($wordlabel);
@@ -243,6 +244,7 @@ while($line)
 		$wordform10 = $3;
 		$wordlabel = $1 . "(" . $2 . ")"; 
 		$wordlabel = replace_special($wordlabel); 
+		#print $wordlabel . "\n";
 		$wordform10 =~ s/\\&/&amp;/;
 		$wordform10 = replace_accents($wordform10);		
 		
@@ -696,6 +698,7 @@ sub gen_unicode()
 			$imagename =~ s/ /_/g;
 			$imagename =~ s/'//g;
 			$imagecaption =~ s/:fig$//;
+			$imagecaption =~ s/\\\(\^([0-9]+)\\\)/<sup>\1<\/sup>/;
 			$imgcount++;
 			$lightbox_img_str = "imgae-" . $imgcount;
 			#$kan_str =~ s/\\imglink\{(.*?)\}\{\\raisebox(.*?)\{([A-Z])_Pictures\/(.*?)\.jpg\}\}\}/!E!<span class="crossref"><a href="#\4fig"><img src="..\/Pictures\/thumbs\/\4.jpg" alt="Figure: \4" \/><\/a><\/span>!K!/;
@@ -721,6 +724,11 @@ sub gen_unicode()
 			$wordlabel = $1;
 			$typeset = $2;
 			$typeset =~ s/\\&/&amp;/g;
+			if( ($typeset =~ /\$\^([0-9]+)\$/) || ($typeset =~ /\\\(\^([0-9]+)\\\)/))
+			{
+				$typeset =~ s/\$\^([0-9]+)\$/<sup>\1<\/sup>/g;
+				$typeset =~ s/\\\(\^([0-9]+)\\\)/<sup>\1<\/sup>/g;
+			}
 			if($typeset =~ /\\it/)
 			{
 				$typeset =~ s/\\it//;
@@ -1579,13 +1587,13 @@ $line =~ s/\\hiV /hiVnAthaRka parxyoVga/g;
 $line =~ s/\\hiV\\ /hiVnAthaRka parxyoVga /g;
 $line =~ s/\\hiV/hiVnAthaRka parxyoVga/g;
 
-$line =~ s/\\L /\\eng\{Latin\}/g;
-$line =~ s/\\L\\ /\\eng\{Latin\} /g;
-$line =~ s/\\L/\\eng\{Latin\}/g;
-
 $line =~ s/\\Latin /\\eng\{Latin\}/g;
 $line =~ s/\\Latin\\ /\\eng\{Latin\} /g;
 $line =~ s/\\Latin/\\eng\{Latin\}/g;
+
+$line =~ s/\\L /\\eng\{Latin\}/g;
+$line =~ s/\\L\\ /\\eng\{Latin\} /g;
+$line =~ s/\\L/\\eng\{Latin\}/g;
 
 return $line;
 }
@@ -1682,6 +1690,8 @@ sub create_hash()
 		$hashid = replace_special($hashid);
 		$mainhash{$hashid} = "";
 		
+		#print $hashid . "\n";
+		
 		for($m=0;$m<@list;$m++)
 		{
 			if($m != $l)
@@ -1704,13 +1714,14 @@ sub replace_special()
 {
 	my($mytarget) = @_;
 	
+	$mytarget =~ s/^ *//g;
 	$mytarget =~ s/\(/_/g;
 	$mytarget =~ s/\)/_/g;
 	$mytarget =~ s/ /_/g;
 	$mytarget =~ s/'/_/g;
 	$mytarget =~ s/,//g;
 	$mytarget =~ s/\\&/and/g;
-#	$mytarget =~ s/-/_/g;
+	$mytarget =~ s/-/_/g;
 	$mytarget =~ s/\./_/g;
 	
 	return ($mytarget);
