@@ -2,6 +2,5 @@
 *.aux
 *.log
 *.toc
-src/tmp*
+src/tmp*.*
 junk/
-tmp*.*
