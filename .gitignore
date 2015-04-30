@@ -4,3 +4,4 @@
 *.toc
 src/tmp*
 junk/
+tmp*.*
