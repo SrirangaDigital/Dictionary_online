@@ -628,6 +628,8 @@ sub gen_unicode()
 	my ($tmp,$flg,$i,$endash_uni,$endash,$flag);
 	$flg = 1;
 
+
+	$kan_str =~ s/\\eng\{\\textasciitilde\}/!E!&#x7E;!K!/g;
 	$kan_str =~ s/\\Pisymbol\{psy\}\{226\}/!E!&#xAE;!K!/g;
 	$kan_str =~ s/\\eng\{\$\\mathparagraph\$\}/!E!&#xb6;!K!/g;
 	$kan_str =~ s/\\eng\{\$\\bigcircP\$\}/!E!&#x24C5;!K!/g;
@@ -691,6 +693,14 @@ sub gen_unicode()
 		#~ {
 			#~ $kan_str =~ s/\$([^\$]*)\$/!E!\\(\1\\)!K!/;
 		#~ }
+		elsif($kan_str =~ /\\extrafig\{(.*)\}\{\?\?(.*)\?\?\}/)
+		{
+			$imagename = $1;
+			$imagename =~ s/ /_/g;
+			$imagename =~ s/'//g;
+			$imagecaption = "texcode: " . $2;
+			$kan_str =~ s/\\extrafig\{(.*)\}\{\?\?(.*)\?\?\}/!E!<span class="crossref"><img src="..\/Pictures\/main\/$imagename.jpg" alt="$imagecaption" \/><\/span>!K!/;
+		}
 		elsif($kan_str =~ /\\imglink\{(.*)\}\{\\raisebox(.*)\{([A-Z])_Pictures\/(.*)\.jpg\}\}\}/)
 		{
 			$imagecaption = $1;
@@ -723,9 +733,9 @@ sub gen_unicode()
 			$insert_italic = 0;
 			$wordlabel = $1;
 			$typeset = $2;
-			$typeset =~ s/\\&/&amp;/g;
-			if( ($typeset =~ /\$\^([0-9]+)\$/) || ($typeset =~ /\\\(\^([0-9]+)\\\)/))
+			if( ($typeset =~ /\$\^([0-9]+)\$/) || ($typeset =~ /\\\(\^([0-9]+)\\\)/) || ($typeset =~ /\$\^\\bg([0-9]+)\\&([0-9]+)\\eg\$/) )
 			{
+				$typeset =~ s/\$\^\\bg([0-9]+)\\&([0-9]+)\\eg\$/<sup>\1 and \2<\/sup>/g;
 				$typeset =~ s/\$\^([0-9]+)\$/<sup>\1<\/sup>/g;
 				$typeset =~ s/\\\(\^([0-9]+)\\\)/<sup>\1<\/sup>/g;
 			}
@@ -751,7 +761,7 @@ sub gen_unicode()
 				$kan_str =~ s/\\hyperlink\{(.*?)\}\{(.*?)\}/!E!<span class="crossref"><a href="#$wordlabel">$typeset<\/a><\/span>!K!/;
 			}
 			#~ print $kan_str . "\n";
-			
+			$typeset =~ s/\\&/&amp;/g;			
 			$typeset = "";
 			$insert_italic = 0;
 		}
@@ -845,7 +855,8 @@ sub gen_unicode()
 	$uni_str =~ s/&nbsp;/&#xA0;/g;
 	$uni_str =~ s/\\\^e/&#xEA;/g;
 	#$uni_str =~ s/(&#x0CCD;)(&#x200C;)(&#x0C97;)(&#x0CCD;)/\1\3\4/;
-		
+
+	
 	while($flg)
 	{
 		if($uni_str =~ /&#x([0-9A-F]+);/)
@@ -1307,6 +1318,7 @@ $line =~ s/\\Per\\ /\\eng\{Persian\} /g;
 $line =~ s/\\Per/\\eng\{Persian\}/g;
 
 $line =~ s/^\\P$/\\eng\{Proprietary name\}/g;
+$line =~ s/\(\\P\)/(\\eng\{Proprietary name\})/g;
 $line =~ s/\\P /\\eng\{Proprietary name\}/g;
 $line =~ s/\\P\\ /\\eng\{Proprietary name\} /g;
 $line =~ s/\b\\P\b/\\eng\{Proprietary name\}/g;
@@ -1665,6 +1677,8 @@ sub manage_duplicates()
 		{
 			if(@list > 0)
 			{
+				#print @list;
+				#print "\n";
 				create_hash();			
 			}
 			$prevocc = 0;
@@ -1674,6 +1688,13 @@ sub manage_duplicates()
 		$dupline = <HASH>;
 		$id++;
 	}
+
+if(@list > 0)
+{
+	create_hash();		
+	$prevocc = 0;
+	@list = ();			
+}
 
 	close(HASH);
 }
@@ -1721,7 +1742,7 @@ sub replace_special()
 	$mytarget =~ s/'/_/g;
 	$mytarget =~ s/,//g;
 	$mytarget =~ s/\\&/and/g;
-	$mytarget =~ s/-/_/g;
+	$mytarget =~ s/-/__/g;
 	$mytarget =~ s/\./_/g;
 	
 	return ($mytarget);
@@ -1742,6 +1763,7 @@ sub replace_accents()
 	my($wordForm) = @_;
 	
 	$wordForm =~ s/\\\^e/ê/g;
+	$wordForm =~ s/\\\`a/à/g;
 	
 	return ($wordForm);
 }
