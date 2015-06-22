@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-open(IN,"W/texfiles/letter_w.tex") or die("W/texfiles/letter_w.tex");
+open(IN,"S/texfiles/letter_s.tex") or die("S/texfiles/letter_s.tex");
 
 $line = <IN>;
 $count = 0;
@@ -22,10 +22,10 @@ while($line)
 	#~ {
 		#~ $count--;
 	#~ }
-	elsif($line =~ /\\pron/)
-	{
-		$count++;
-	}
+	#~ elsif($line =~ /\\pron/)
+	#~ {
+		#~ $count++;
+	#~ }
 	#~ elsif($line =~ /\\bnum/)
 	#~ {
 		#~ $count++;
@@ -43,7 +43,7 @@ while($line)
 	#~ }
 	elsif($line =~ /\\eentry/)
 	{
-		if($count == 0)
+		if( ($count == 0) || ($count > 1) )
 		{
 			print $lno . "\n";
 		}

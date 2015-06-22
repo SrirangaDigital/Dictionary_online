@@ -854,6 +854,8 @@ sub gen_unicode()
 	$uni_str =~ s/'/&#x2019;/g;
 	$uni_str =~ s/&nbsp;/&#xA0;/g;
 	$uni_str =~ s/\\\^e/&#xEA;/g;
+	$uni_str =~ s/\\\~n/&#xF1;/g;
+	$uni_str =~ s/\\\'e/&#xE9;/g;
 	#$uni_str =~ s/(&#x0CCD;)(&#x200C;)(&#x0C97;)(&#x0CCD;)/\1\3\4/;
 
 	
@@ -944,6 +946,10 @@ $line =~ s/\\ucAcx/ucAcxraNe/g;
 $line =~ s/\\udA /udAharaNege/g;
 $line =~ s/\\udA\\ /udAharaNege /g;
 $line =~ s/\\udA/udAharaNege/g;
+
+$line =~ s/\\u /uatatxra/g;
+$line =~ s/\\u\\ /uatatxra /g;
+$line =~ s/\\u/uatatxra/g;
 
 $line =~ s/\\UK /\\eng\{United Kingdom\}/g;
 $line =~ s/\\UK\\ /\\eng\{United Kingdom\} /g;
@@ -1764,6 +1770,7 @@ sub replace_accents()
 	
 	$wordForm =~ s/\\\^e/ê/g;
 	$wordForm =~ s/\\\`a/à/g;
+	$wordForm =~ s/\\\'e/é/g;
 	
 	return ($wordForm);
 }
